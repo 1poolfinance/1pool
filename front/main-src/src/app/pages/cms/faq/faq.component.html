@@ -1,0 +1,29 @@
+<app-header></app-header>
+<div class="main_content">
+	<div class="innerBanner">
+   <div class="container">
+    <h1 class="text-center">
+     <span class="color-gradient">Have a Question Look here.</span>
+   </h1>
+ </div>
+</div>
+<div class="innerPage faqPage">
+ <div class="container">
+  <div class="faqBlock">
+    <tabset class="faqAcc">
+      <tab heading="General" id="tab1">
+       <accordion [isAnimated]="true" [closeOthers]="oneAtATime" *ngIf="content">
+        <div *ngFor="let group of faq">
+          <accordion-group [isOpen]="isFirstOpen" [heading]="group?.question">        
+            <p class="mb-0" [innerHTML]= "group?.answer"></p>
+          </accordion-group>
+        </div>
+      </accordion>
+    </tab>
+  </tabset>
+</div>
+</div>
+</div>
+</div>
+
+<app-footer class="inner_footer"></app-footer>

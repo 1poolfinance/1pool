@@ -1,0 +1,1 @@
+export let USDvals =  {"op_usd":100,"uni_usd":300}

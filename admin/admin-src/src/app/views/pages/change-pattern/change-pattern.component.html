@@ -1,0 +1,43 @@
+<div class="card">
+	<div class="card-header">
+		<strong>Change Password</strong>
+</div>
+
+<form name="form"  #f="ngForm" novalidate style="margin-left: 25px;">
+
+	<div class="form-group Change_pattern">
+		<div class="control-group">
+	<div class="row">
+		<div class="col-md-6">
+			<label class="my-2">Draw old pattern</label>
+			<div id="patterncode" name="patterncode" ngDefaultControl ngModel></div>
+		</div>
+
+		<div class="col-md-6">
+			<label class="my-2">Draw new pattern</label>	
+			<div id="pattern" name="pattern" ngDefaultControl ngModel></div>
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="col-md-6">
+			<label class="my-2">Confirm new pattern</label>	
+			<div id="code" name="code" ngDefaultControl ngModel></div>
+		</div>
+	</div>
+
+		</div>
+	</div>
+
+</form>
+	<div class="card-footer">
+		<div *ngIf="postRequest==''">
+			<button class="btn btn-sm btn-primary" (click) = "onSubmit2(f.form.value)"><i class="fa fa-dot-circle-o"></i> Submit</button>
+		</div>
+		<div *ngIf="postRequest=='yes'">
+			<button class="btn btn-sm btn-primary" disabled> <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
+			Loading...</button>
+		</div>
+	</div>
+</div>
+

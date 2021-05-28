@@ -1,0 +1,52 @@
+<div class="text-center" *ngIf="loading">
+	<div class="spinner-grow text-primary loader-icon" role="status">
+		<span class="sr-only">Loading...</span>
+	</div>
+</div>
+<div class="animated fadeIn" [style.display]="(actionType === 'all')?'block':'none'">
+	<div class="row">
+		<div class="col-lg-12">
+			<div class="card">
+				<div class="card-header">
+					<i class="fa fa-align-justify"></i> User List
+				</div>
+				<div class="card-body">
+					<mat-form-field>
+					<input matInput placeholder="Search" #input>
+					</mat-form-field>
+					
+					<mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort>
+					<ng-container matColumnDef="ip_address">
+					<mat-header-cell *matHeaderCellDef mat-sort-header>Ip Address </mat-header-cell>
+					<mat-cell *matCellDef="let element"> {{element.ip_address}} </mat-cell>
+					</ng-container>
+					<ng-container matColumnDef="emailid">
+					<mat-header-cell *matHeaderCellDef mat-sort-header>Email </mat-header-cell>
+					<mat-cell *matCellDef="let element"> {{element.emailid}} </mat-cell>
+					</ng-container>
+					<ng-container matColumnDef="browser">
+					<mat-header-cell *matHeaderCellDef mat-sort-header>Browser </mat-header-cell>
+					<mat-cell *matCellDef="let element"> {{element.browser}} </mat-cell>
+					</ng-container>
+					<ng-container matColumnDef="deviceinfo">
+					<mat-header-cell *matHeaderCellDef mat-sort-header>Device</mat-header-cell>
+					<mat-cell *matCellDef="let element"> {{element.deviceinfo}} </mat-cell>
+					</ng-container>
+					<ng-container matColumnDef="attemptCount">
+					<mat-header-cell *matHeaderCellDef mat-sort-header>Attmpts</mat-header-cell>
+					<mat-cell *matCellDef="let element"> {{element.attemptCount}} </mat-cell>
+					</ng-container>
+					<ng-container matColumnDef="created_at">
+					<mat-header-cell *matHeaderCellDef mat-sort-header> Created date </mat-header-cell>
+					<mat-cell *matCellDef="let element"> {{element.created_at | date: 'yyyy-MM-dd h:mm:ss'}} </mat-cell>
+					</ng-container>
+					<mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+					<mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+					</mat-table>
+					<div *ngIf="displayNoRecords" class="norecords">No records found</div>
+					<mat-paginator [length]="logcount" [pageSizeOptions]="[10, 25, 50, 100]" showFirstLastButtons></mat-paginator>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

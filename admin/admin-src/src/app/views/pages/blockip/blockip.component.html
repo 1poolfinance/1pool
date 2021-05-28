@@ -1,0 +1,88 @@
+<div class="text-center" *ngIf="loading">
+	<div class="spinner-grow text-primary loader-icon" role="status">
+		<span class="sr-only">Loading...</span>
+	</div>
+</div>
+
+<div [style.display]="(actionType === 'all')?'block':'none'">
+	<div class="row">
+		<div class="col-lg-12">
+			<div class="card">
+				<div class="card-header">
+					<i class="fa fa-align-justify"></i> Block IP List
+					<button class="btn btn-primary pull-right" (click)="redirectToAdd()">
+						Add
+					</button>
+				</div>
+				<div class="card-body">
+					<mat-form-field>
+						<input matInput (keyup)="applyFilter($event.target.value)" placeholder="Search">
+					</mat-form-field>
+					<mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort>
+						<ng-container matColumnDef="ip">
+							<mat-header-cell *matHeaderCellDef mat-sort-header> IP </mat-header-cell>
+							<mat-cell *matCellDef="let element"> {{element.ip_addr?element.ip_addr:'--'}} </mat-cell>
+						</ng-container>
+						<ng-container matColumnDef="created_at">
+							<mat-header-cell *matHeaderCellDef mat-sort-header> Created date </mat-header-cell>
+							<mat-cell *matCellDef="let element"> {{element.created_at | date: 'yyyy-MM-dd H:mm:ss'}} </mat-cell>
+						</ng-container>
+						<ng-container matColumnDef="action">
+							<mat-header-cell *matHeaderCellDef> Action </mat-header-cell>
+							<mat-cell *matCellDef="let element">
+								<button mat-icon-button md-18 color="warn" (click)="openConfirmationDialog(element._id)" matTooltip="Delete" matTooltipPosition="above">
+									<i class="material-icons">delete</i>
+								</button>
+							</mat-cell>
+						</ng-container>
+						
+						<mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+						<mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+					</mat-table>
+
+					<div *ngIf="displayNoRecords" class="norecords" >No records found</div>
+
+					<mat-paginator
+					[pageSizeOptions]="[10, 25, 50, 100]"
+					showFirstLastButtons
+					></mat-paginator>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="card" *ngIf="actionType==='add'">
+	<div class="card-header">
+	<strong> Add IP </strong>
+	<button class="btn btn-primary btn-sm pull-right" (click)="redirectToAll('all')">
+		Close
+	</button>
+	</div>
+	<form (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" novalidate autocomplete="off">
+		<div class="card-body">
+
+			<div class="form-group row">
+				<label class="col-md-3 col-form-label">IP Address</label>
+				<div class="col-md-4">
+					<input type="text" class="form-control" name="ip"  placeholder="IP Address" [(ngModel)]="model.ip" #ip="ngModel" [ngClass]="{ 'is-invalid': f.submitted && ip.invalid }" required />
+					<div *ngIf="f.submitted && ip.invalid" class="invalid-feedback">
+						<div *ngIf="ip.errors.required">Ip is required</div>
+					</div>
+				</div>
+			</div>
+
+		</div>
+		
+		<div class="card-footer">
+			<div *ngIf="postRequest==''">
+				<button class="btn btn-sm btn-primary"><i class="fa fa-dot-circle-o"></i> Submit</button>
+				<button type="button" class="btn btn-sm btn-danger" (click)="cancelToAdd()"><i class="fa fa-ban"></i> Cancel</button>
+			</div>
+			<div *ngIf="postRequest=='yes'">
+				<button class="btn btn-sm btn-primary" disabled> <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
+				Loading...</button>
+			</div>
+		</div>
+	</form>
+</div>

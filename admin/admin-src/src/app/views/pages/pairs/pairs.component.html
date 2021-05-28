@@ -1,0 +1,78 @@
+<div class="text-center" *ngIf="loading">
+	<div class="spinner-grow text-primary loader-icon" role="status">
+		<span class="sr-only">Loading...</span>
+	</div>
+</div>
+
+<div class="animated fadeIn" [style.display]="(actionType === 'all')?'block':'none'">
+	<div class="row">
+		<div class="col-lg-12">
+			<div class="card">
+				<div class="card-header">
+					<i class="fa fa-align-justify"></i> Currency Pair List
+				</div>
+				<div class="card-body">
+					<mat-form-field>
+						<input matInput (keyup)="applyFilter($event.target.value)" placeholder="Search">
+					</mat-form-field>
+					<mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort>
+
+						<ng-container matColumnDef="symbol">
+							<mat-header-cell *matHeaderCellDef mat-sort-header> Pair </mat-header-cell>
+							<mat-cell *matCellDef="let element"> {{element.symbol}} </mat-cell>
+						</ng-container>
+
+						<ng-container matColumnDef="decimals">
+							<mat-header-cell *matHeaderCellDef mat-sort-header> Decimals </mat-header-cell>
+							<mat-cell *matCellDef="let element"> {{element.decimals}} </mat-cell>
+						</ng-container>
+
+						<ng-container matColumnDef="address">
+							<mat-header-cell *matHeaderCellDef mat-sort-header> Addresss </mat-header-cell>
+							<mat-cell *matCellDef="let element"> {{element.address}} </mat-cell>
+						</ng-container>
+
+						<ng-container matColumnDef="price">
+							<mat-header-cell *matHeaderCellDef mat-sort-header> Price </mat-header-cell>
+							<mat-cell *matCellDef="let element"> {{element.price}} </mat-cell>
+						</ng-container>
+
+						<ng-container matColumnDef="status">
+							<mat-header-cell *matHeaderCellDef mat-sort-header> Status </mat-header-cell>
+							<mat-cell color="red" *matCellDef="let element">
+								<span class="badge badge-success" *ngIf="element.status==='Active'">Active</span>
+								<span class="badge badge-danger" *ngIf="element.status==='Deactive'">Deactive</span>	
+							</mat-cell>
+						</ng-container>
+
+						<ng-container matColumnDef="created_at">
+							<mat-header-cell *matHeaderCellDef mat-sort-header> Updated date </mat-header-cell>
+							<mat-cell *matCellDef="let element"> {{element.created_at | date: 'yyyy-MM-dd H:mm:ss'}} </mat-cell>
+						</ng-container>
+
+
+						<ng-container matColumnDef="action">
+							<mat-header-cell *matHeaderCellDef> Action </mat-header-cell>
+							<mat-cell *matCellDef="let element">
+								<button mat-icon-button md-18 color="warn" [routerLink]="['/UQZYyKXjbJhGPFSqSzkY/pages/view-pairs']" [queryParams]="{token: element._id}" matTooltip="Edit" matTooltipPosition="above">
+									<i class="material-icons">edit</i>
+								</button>
+							</mat-cell>
+						</ng-container>
+
+						<mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+						<mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+					</mat-table>
+					
+					<div *ngIf="displayNoRecords" class="norecords" >No records found</div>
+
+					<mat-paginator [pageSize]="10"
+					[pageSizeOptions]="[10, 25, 50, 100]"
+					showFirstLastButtons
+					></mat-paginator>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+

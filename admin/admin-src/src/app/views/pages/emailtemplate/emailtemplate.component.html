@@ -1,0 +1,106 @@
+<div class="text-center" *ngIf="loading">
+	<div class="spinner-grow text-primary loader-icon" role="status">
+		<span class="sr-only">Loading...</span>
+	</div>
+</div>
+<div class="row" [style.display]="(actionType === 'all')?'block':'none'">
+	<div class="col-lg-12">
+		<div class="card">
+			<div class="card-header">
+				<i class="fa fa-align-justify"></i>  Email Templates
+			</div>
+			<div class="card-body">
+				<mat-form-field>
+					<input matInput (keyup)="applyFilter($event.target.value)" placeholder="Search">
+				</mat-form-field>
+				<mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort>
+
+					<ng-container matColumnDef="title">
+						<mat-header-cell *matHeaderCellDef mat-sort-header> Template Name </mat-header-cell>
+						<mat-cell *matCellDef="let element"> {{element.title}} </mat-cell>
+					</ng-container>
+
+					<ng-container matColumnDef="mailsubject">
+						<mat-header-cell *matHeaderCellDef mat-sort-header> Subject </mat-header-cell>
+						<mat-cell *matCellDef="let element"> {{element.mailsubject}} </mat-cell>
+					</ng-container>
+
+					<ng-container matColumnDef="updated_at">
+						<mat-header-cell *matHeaderCellDef mat-sort-header> Updated date </mat-header-cell>
+						<mat-cell *matCellDef="let element"> {{element.updated_at | date: 'yyyy-MM-dd H:mm:ss'}} </mat-cell>
+					</ng-container>
+
+					<ng-container matColumnDef="action">
+						<mat-header-cell *matHeaderCellDef> Action </mat-header-cell>
+						<mat-cell *matCellDef="let element">
+							<button mat-icon-button color="primary" (click)="redirectToEdit(element._id)" matTooltip="Edit" matTooltipPosition="above">
+								<i class="material-icons">edit</i>
+							</button>
+						</mat-cell>
+					</ng-container>
+
+					<mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+					<mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+				</mat-table>
+				<div *ngIf="displayNoRecords" class="norecords" >No records found</div>
+
+				<mat-paginator
+				[pageSizeOptions]="[10, 25, 50, 100]"
+				showFirstLastButtons
+				></mat-paginator>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+<div class="card" *ngIf="actionType==='edit'">
+	<div class="card-header">
+		<strong>Update Template</strong>
+		<button class="btn btn-primary btn-sm pull-right" (click)="redirectToAll('all')">
+						Close
+					</button>
+	</div>
+	<form name="cmsForm" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" novalidate>
+		<div class="card-body">
+
+			<div class="form-group row">
+				<label class="col-md-3 col-form-label" for="title">Title</label>
+				<div class="col-md-7">
+					<input type="text" class="form-control" name="title" [(ngModel)]="model.title" #title="ngModel" [ngClass]="{ 'is-invalid': f.submitted && title.invalid }" required  readonly />
+					<div *ngIf="f.submitted && title.invalid" class="invalid-feedback">
+						<div *ngIf="title.errors.required">Title is required</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="form-group row">
+				<label class="col-md-3 col-form-label" for="mailsubject">Subject</label>
+				<div class="col-md-7">
+					<input type="text" class="form-control" name="mailsubject" [(ngModel)]="model.mailsubject" #mailsubject="ngModel" [ngClass]="{ 'is-invalid': f.submitted && mailsubject.invalid }" required />
+					<div *ngIf="f.submitted && mailsubject.invalid" class="invalid-feedback">
+						<div *ngIf="mailsubject.errors.required">Subject is required</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="form-group row">
+				<label class="col-md-3 col-form-label" for="mailcontent">Content</label>
+				<div class="col-md-9">
+					<div *ngIf="mailcnt.invalid && mailcnt.touched" class="help-block text-danger">Content is required</div>
+				</div>
+			</div>
+
+		</div>
+		<div class="card-footer">
+			<div *ngIf="postRequest==''">
+				<button class="btn btn-sm btn-primary"><i class="fa fa-dot-circle-o"></i> Submit</button>
+				<button type="button" class="btn btn-sm btn-danger" (click)="cancelToEdit()"><i class="fa fa-ban"></i> Cancel</button>
+			</div>
+			<div *ngIf="postRequest=='yes'">
+				<button class="btn btn-sm btn-primary" disabled> <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
+				Loading...</button>
+			</div>
+		</div>
+	</form>
+</div>

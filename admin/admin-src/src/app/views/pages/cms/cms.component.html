@@ -1,0 +1,92 @@
+<div class="text-center" *ngIf="loading">
+	<div class="spinner-grow text-primary loader-icon" role="status">
+		<span class="sr-only">Loading...</span>
+	</div>
+</div>
+<div [style.display]="(actionType === 'all')?'block':'none'">
+	<div class="row">
+		<div class="col-lg-12">
+			<div class="card">
+				<div class="card-header">
+					<i class="fa fa-align-justify"></i> CMS List
+				</div>
+				<div class="card-body">
+					<mat-form-field>
+						<input matInput (keyup)="applyFilter($event.target.value)" placeholder="Search">
+					</mat-form-field>
+					<mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort>
+
+				  <ng-container matColumnDef="pagetitle">
+					<mat-header-cell *matHeaderCellDef mat-sort-header> Page Name </mat-header-cell>
+					<mat-cell *matCellDef="let element"> {{element.pagetitle}} </mat-cell>
+				  </ng-container>
+
+				  <ng-container matColumnDef="updated_at">
+						<mat-header-cell *matHeaderCellDef mat-sort-header> Updated date </mat-header-cell>
+							<mat-cell *matCellDef="let element"> {{element.updated_at | date: 'yyyy-MM-dd H:mm:ss'}} </mat-cell>
+				  </ng-container>
+
+				  <ng-container matColumnDef="action">
+						<mat-header-cell *matHeaderCellDef> Action </mat-header-cell>
+							<mat-cell *matCellDef="let element">
+								<button mat-icon-button md-18 color="warn" (click)="redirectToEdit(element._id)" matTooltip="Edit" matTooltipPosition="above">
+									<i class="material-icons">edit</i>
+								</button>
+							</mat-cell>
+				  </ng-container>
+				    
+				  	<mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+				 		 <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+					</mat-table>
+					<div *ngIf="displayNoRecords" class="norecords" >No records found</div>
+					<mat-paginator [pageSizeOptions]="[10, 25, 50, 100]" showFirstLastButtons></mat-paginator>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="card" *ngIf="actionType==='edit'">
+	<div class="card-header">
+		<strong> Update CMS </strong>
+		<button class="btn btn-primary btn-sm pull-right" (click)="redirectToAll('all')">
+		Close
+		</button>
+	</div>
+	<form name="cmsForm" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" novalidate>
+		<div class="card-body">
+			<div class="form-group row">
+				<label class="col-md-3 col-form-label" for="pagetype">Type</label>
+				<div class="col-md-6">
+					<input type="text" class="form-control" name="pagetype" [(ngModel)]="model.pagetype" #pagetype="ngModel" [ngClass]="{ 'is-invalid': f.submitted && pagetype.invalid }" required readonly/>
+				</div>
+			</div>
+			<div class="form-group row">
+				<label class="col-md-3 col-form-label" for="pagetitle">Page Title</label>
+				<div class="col-md-6">
+					<input type="text" class="form-control" name="pagetitle" [(ngModel)]="model.pagetitle" #pagetitle="ngModel" [ngClass]="{ 'is-invalid': f.submitted && pagetitle.invalid }" required />
+					<div *ngIf="f.submitted && pagetitle.invalid" class="invalid-feedback">
+						<div *ngIf="pagetitle.errors.required">Title is required</div>
+					</div>
+				</div>
+			</div>
+			<div class="form-group row">
+				<label class="col-md-3 col-form-label" for="pagecontent">Content</label>
+				<div class="col-md-9">
+					<ckeditor name="pagecnt" class="form-control cke_form" [(ngModel)]="model.pagecontent" #pagecnt="ngModel" [ngClass]="{ 'is-invalid': f.submitted && pagecnt.invalid }" required [config]="config" debounce="500"></ckeditor>
+					<div *ngIf="pagecnt.invalid && pagecnt.touched" class="help-block text-danger">Content is required.</div>
+				</div>
+			</div>
+		</div>
+		<div class="card-footer">
+			<div *ngIf="postRequest==''">
+				<button class="btn btn-sm btn-primary"><i class="fa fa-dot-circle-o"></i> Submit</button>
+				<button type="button" class="btn btn-sm btn-danger" (click)="cancelToEdit()"><i class="fa fa-ban"></i> Cancel</button>
+			</div>
+			<div *ngIf="postRequest=='yes'">
+				<button class="btn btn-sm btn-primary" disabled> <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
+				Loading...</button>
+			</div>
+		</div>
+	</form>
+</div>

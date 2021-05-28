@@ -1,0 +1,225 @@
+
+
+<div [style.display]="(actionType === 'all')?'block':'none'">
+	<div class="row">
+		<div class="col-lg-12">
+			<div class="card">
+				<div class="card-header">
+					<i class="fa fa-align-justify"></i> Withdraw List
+				</div>
+				<div class="card-body">
+					<mat-form-field>
+						<input matInput placeholder="Search" #input autocomplete="off">
+					</mat-form-field>
+					<button style="float: right;" class="btn btn-success" (click)="my_profit_excel()">Export</button>
+					<mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort>
+
+						<ng-container matColumnDef="username">
+							<mat-header-cell *matHeaderCellDef mat-sort-header>User Name </mat-header-cell>
+							<mat-cell *matCellDef="let element"> {{element.username}} </mat-cell>
+						</ng-container>
+						<ng-container matColumnDef="amount">
+							<mat-header-cell *matHeaderCellDef mat-sort-header>Amount</mat-header-cell>
+							<mat-cell *matCellDef="let element"> {{element.amount}} </mat-cell>
+						</ng-container>
+						<ng-container matColumnDef="reference_no">
+							<mat-header-cell *matHeaderCellDef mat-sort-header>Txn. Id</mat-header-cell>
+							<mat-cell *matCellDef="let element"> 
+								<span *ngIf="element.reference_no== ''">--</span>
+								<span *ngIf="element.reference_no!= ''">{{element.reference_no}}</span>
+							</mat-cell>
+						</ng-container>
+						<ng-container matColumnDef="currency">
+							<mat-header-cell *matHeaderCellDef mat-sort-header>Currency </mat-header-cell>
+							<mat-cell *matCellDef="let element"> {{element.currency}} </mat-cell>
+						</ng-container>
+						<ng-container matColumnDef="status">
+							<mat-header-cell *matHeaderCellDef mat-sort-header> Status </mat-header-cell>
+							<mat-cell color="red" *matCellDef="let element">
+								<span class="badge badge-primary" *ngIf="element.status== 'processing'">Processing</span>
+								<span class="badge badge-warning" *ngIf="element.status== 'pending'">Pending</span>
+								<span class="badge badge-danger" *ngIf="element.status== 'rejected'">Rejected</span>
+								<span class="badge badge-danger" *ngIf="element.status== 'cancelled'">Cancelled</span>	
+								<span class="badge badge-success" *ngIf="element.status== 'completed'">Completed</span>
+							</mat-cell>
+						</ng-container>
+						
+						<ng-container matColumnDef="created_at">
+							<mat-header-cell *matHeaderCellDef mat-sort-header> Created date </mat-header-cell>
+							<mat-cell *matCellDef="let element"> {{element.created_at | date: 'yyyy-MM-dd H:mm:ss'}} </mat-cell>
+						</ng-container>
+
+						<ng-container matColumnDef="action">
+							<mat-header-cell *matHeaderCellDef> Action </mat-header-cell>
+							<mat-cell *matCellDef="let element">								
+								<button mat-icon-button md-18 color="warn" (click)="onView(element._id)" matTooltip="View" matTooltipPosition="above">
+									<i class="material-icons">visibility</i>
+								</button>								
+							</mat-cell>
+						</ng-container>
+						<mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+						<mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+					</mat-table>
+					<div *ngIf="displayNoRecords" class="norecords">No records found</div>
+					<mat-paginator [length]="withdrawCount" [pageSize]="10"
+					[pageSizeOptions]="[10, 25, 50, 100]" showFirstLastButtons></mat-paginator>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+
+<div class="card" *ngIf="actionType==='view'">
+	<div class="card-header">
+		<strong>
+			Withdraw Details
+		</strong>
+		<button class="btn btn-primary btn-sm pull-right" (click)="redirectToAll('all')">
+			Close
+		</button>
+	</div>
+	
+	<div class="card-body">
+
+		<div class="form-group row">
+			<label class="col-md-3 col-form-label">Transaction ID</label>
+			<div class="col-md-6 col-form-label">
+				{{viewDetail.reference_no}}
+			</div>
+		</div>
+		<div class="form-group row">
+			<label class="col-md-3 col-form-label">Withdraw Address</label>
+			<div class="col-md-6 col-form-label">
+				{{viewDetail.address_info}}
+			</div>
+		</div>
+		<div class="form-group row">
+			<label class="col-md-3 col-form-label">Transfer Amount</label>
+			<div class="col-md-6 col-form-label">
+				{{viewDetail.transfer_amount}}
+			</div>
+		</div>		
+		
+		<div class="form-group row">
+			<label class="col-md-3 col-form-label">Currency Name</label>
+			<div class="col-md-6 col-form-label">
+				{{viewDetail.currency}}
+			</div>
+		</div>			
+		<div class="form-group row">
+			<label class="col-md-3 col-form-label">Payment Method</label>
+			<div class="col-md-6 col-form-label">
+				{{viewDetail.payment_method }}
+			</div>
+		</div>
+		<div class="form-group row">
+			<label class="col-md-3 col-form-label">User Email</label>
+			<div class="col-md-6 col-form-label">
+				{{viewDetail.email}}
+			</div>
+		</div>
+		<div class="form-group row">
+			<label class="col-md-3 col-form-label">Withdraw Amount</label>
+			<div class="col-md-6 col-form-label">
+				{{rounds(viewDetail.amount,'8')}}
+			</div>
+		</div>
+		<div class="form-group row">
+			<label class="col-md-3 col-form-label">Withdraw Fee</label>
+			<div class="col-md-6 col-form-label">
+				{{rounds(viewDetail.fee_amt,'8')}}
+			</div>
+		</div>
+		<div class="form-group row">
+			<label class="col-md-3 col-form-label">Date & Time</label>
+			<div class="col-md-6 col-form-label">
+				{{viewDetail.created_at | date: 'yyyy-MM-dd H:mm:ss'}}
+			</div>
+		</div>
+
+		<div class="form-group row">
+			<label class="col-md-3 col-form-label">Status</label>
+			<div class="col-md-6 col-form-label">
+				<span class="badge badge-primary" *ngIf="viewDetail.status== 'processing'">Processing</span>
+				<span class="badge badge-warning" *ngIf="viewDetail.status== 'pending'">Pending</span>
+				<span class="badge badge-danger" *ngIf="viewDetail.status== 'rejected'">Rejected</span>
+				<span class="badge badge-danger" *ngIf="viewDetail.status== 'cancelled'">Cancelled</span>	
+				<span class="badge badge-success" *ngIf="viewDetail.status== 'completed'">Completed</span>
+			</div>
+		</div>	
+
+		<div class="card-footer" *ngIf="viewDetail.status=='pending' || viewDetail.status=='processing' && DBtn">
+			<div *ngIf="!idrejectLoader">
+				<button class="btn btn-sm btn-primary" (click)="showOTP()" *ngIf="viewDetail.status=='pending'"><i class="fa fa-dot-circle-o"></i> Approve</button>
+				<button type="button" class="btn btn-sm btn-danger" (click)="rejectForm(1)"><i class="fa fa-ban"></i> Reject</button>
+			</div>
+			<div *ngIf="idrejectLoader">
+				<button class="btn btn-sm btn-primary" disabled> <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
+				Loading...</button>
+			</div>
+		</div>
+
+		<form  #rf="ngForm" novalidate *ngIf="IDRejectForm">
+			<div class="form-group row">
+				<label class="col-md-3 col-form-label">Reason to reject</label>
+
+				<div class="col-md-4">
+					<textarea type="text" class="form-control" name="reject_message" [(ngModel)]="IDmodel.rejcomments" #rejcomments="ngModel" [ngClass]="{ 'is-invalid': rf.touched && rejcomments.invalid }" required ></textarea>
+					<div *ngIf="rf.touched && rejcomments.invalid" class="invalid-feedback">
+						<div *ngIf="rejcomments.errors.required">Message is required</div>
+					</div>
+				</div>
+			</div>
+			<div class="form-group row">
+				<div class="col-md-6" *ngIf="!idrejectLoader">
+					<button type="submit" class="btn btn-sm btn-primary" (click)="depositConfirmDialog(viewDetail._id,2)" [disabled]="this.IDmodel.rejcomments==''"><i class="fa fa-dot-circle-o"></i> Reject</button>					
+				</div>
+
+				<div class="col-md-6" *ngIf="idrejectLoader">
+					<button class="btn btn-sm btn-primary" disabled> <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
+					Loading...</button>
+				</div>
+			</div>
+		</form>
+
+
+		<form  #of="ngForm" novalidate *ngIf="OTPForm">
+			<div class="form-group row">
+				<label class="col-md-3 col-form-label">Enter OTP to Approve</label>
+
+				<div class="col-md-2">
+					<input type="text" class="form-control" name="otp" [(ngModel)]="OTPmodel.otp" #otp="ngModel" [ngClass]="{ 'is-invalid': of.touched && otp.invalid }" pattern="^[0-9]*$" required >
+					<button class="btn btn-success" (click)="sendOTP()">Send OTP</button>
+					<div *ngIf="of.touched && otp.invalid" class="invalid-feedback">
+						<div *ngIf="otp.errors.required">OTP is required</div>
+						<div *ngIf="otp.errors.pattern">Enter numbers only</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="form-group row" *ngIf="viewDetail.currency == 'XRP'">
+				<label class="col-md-3 col-form-label">Enter Your {{viewDetail.currency}} Secret Key</label>
+
+				<div class="col-md-2">
+					<input type="text" class="form-control" name="xkey" [(ngModel)]="XRPkey.xkey" #xkey="ngModel" [ngClass]="{ 'is-invalid': of.touched && xkey.invalid }" required >
+					<div *ngIf="of.touched && xkey.invalid" class="invalid-feedback">
+						<div *ngIf="xkey.errors.required">Secret Key is required</div>
+					</div>
+				</div>
+			</div>
+			<div class="form-group row">
+				<div class="col-md-6" *ngIf="!idrejectLoader">
+					<button type="submit" class="btn btn-sm btn-primary" (click)="depositConfirmDialog(viewDetail._id,1)" [disabled]="of.invalid"><i class="fa fa-dot-circle-o"></i> Approve</button>
+				</div>
+
+				<div class="col-md-6" *ngIf="idrejectLoader">
+					<button class="btn btn-sm btn-primary" disabled> <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
+					Loading...</button>
+				</div>
+			</div>
+		</form>
+
+
+	</div>

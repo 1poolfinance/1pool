@@ -1,0 +1,103 @@
+<header class="header">
+	<div class="container">
+		<nav class="navbar navbar-expand-lg">
+			<a class="navbar-brand" routerLink="/">
+				<div class="logo text-center text-sm-left">							
+					<img src="assets/images/logo.png" alt="logo" class="logo-ht" />							
+				</div>					
+			</a>
+			<button class="navbar-toggler" type="button" data-toggle="collapse" (click)="toggleNavbarCollapsing()" data-target="#collapsibleNavbar">
+				<span class="navbar-toggler-icon"><i class="fas fa-bars"></i></span>
+			</button>
+			<div class="collapse navbar-collapse" [class.collapse]="navbarCollapsed" id="collapsibleNavbar">
+				<ul class="navbar-nav ml-auto headerRight text-center">
+					<li class="nav-item">
+						<a class="nav-link btn-none btnMd mr-2" routerLink="/faq">
+							FAQ
+						</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link btn-none btnMd mr-2" href="https://onepool.gitbook.io" target="_blank">
+							Docs
+						</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link btn-none btnMd mr-2" href="https://onepool.gitbook.io/1pool-finance/starting-on-user-guide/user-guide" target="_blank">
+							User Guide
+						</a>
+					</li>
+					<button class="btn btn-primary btnLg" (click)="staticModal.show()" *ngIf="!account && !account_bnb">
+						<span class="align-middle mr-2">
+							<img src="assets/images/icons/unlock.png" alt="unlock" />
+						</span>
+						<span class="align-middle">
+							Connect your wallet 
+						</span>	
+					</button>
+					<button  class="btn btn-primary btnLg" *ngIf="account || account_bnb">
+						<span class="align-middle mr-2">
+							<img src="assets/images/icons/unlock.png" alt="unlock" />
+						</span>
+						<span class="align-middle"  (click)="logout()">
+							Disconnect your wallet {{(account) ? '(ETH)' : '(BNB)'}}
+						</span>	
+					</button>
+					<a href="https://ropsten.etherscan.io/address/0x47adbab56a1600cf74cdfeb95a2276e381e4eb27" target="_blank" class="btn btn-primary btnLg py-3 ml-3 addressbtn"><span class="align-middle">Contract : 0x47adbab5... </span></a>
+				</ul>
+			</div>
+		</nav>	
+	</div>
+</header>
+
+<div class="modal fade modalPrimary" bsModal #staticModal="bs-modal" [config]="{backdrop: 'static'}"
+     tabindex="-1" role="dialog" aria-labelledby="dialog-static-name">
+	  <div class="modal-dialog modal-lg modal-dialog-centered">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <h4 id="dialog-static-name" class="modal-title color-gradient"><span class="">Welcome to 1Pool Harvest Login</span></h4>
+	        <button type="button" class="close pull-right" aria-label="Close" (click)="staticModal.hide()">
+	          <span aria-hidden="true">&times;</span>
+	        </button>
+	      </div>
+	     	<div class="modal-body">			
+				<div class="walletLoginBtns text-center">
+					<button class="d-inline-flex flex-wrap align-items-center justify-content-between btn wl_Btns">
+						<div class="wl_Btn_left">
+							<span class="align-middle wl_Btn_icon">
+								<img src="assets/images/icons/meta-mask.png" alt="meta-mask" />
+							</span>
+							<span class="align-middle wl_Btn_text" (click)="walletoptions('ETH')">
+								Meta Mask
+							</span>
+						</div>
+
+						<div class="wl_Btn_right">
+							<span class="wl_Btn_arrow">
+								<i class="fas fa-chevron-right"></i>
+							</span>
+						</div>
+					</button>
+				</div>
+				<div class="walletLoginBtns text-center">
+					<button class="d-inline-flex flex-wrap align-items-center justify-content-between btn wl_Btns">
+						<div class="wl_Btn_left">
+							<span class="align-middle wl_Btn_icon">
+								<img src="assets/images/icons/binance-smart-chain.png" alt="meta-mask" />
+							</span>
+							<span class="align-middle wl_Btn_text" (click)="walletoptions('BNB')">
+								Binance Chain Wallet
+							</span>
+						</div>
+						
+						<div class="wl_Btn_right">
+							<span class="wl_Btn_arrow">
+								<i class="fas fa-chevron-right"></i>
+							</span>
+						</div>
+					</button>
+				</div>
+				
+			</div>	
+	    </div>
+	  </div>
+</div> 

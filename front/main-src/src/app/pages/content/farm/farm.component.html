@@ -1,0 +1,216 @@
+<app-header></app-header>
+<div class="main_content">
+	<div class="innerBanner pb-1 mb-1">
+		<div class="container">
+			<h1 class="text-center">
+				<span class="d-inline-block color-gradient">
+					<span>
+						Farm your digital assets with 1Pool
+					</span>
+				</span>
+			</h1>
+			<div class="bannerLabel md pt-2">
+				<span> It ain't much, but it's honest work. </span>
+			</div>
+		</div>
+	</div>	
+	<div class="farmStatus">
+		<div class="container">
+			<div class="row justify-content-center farmStatusRow">
+				<div class="col-sm-12 col-md-6 col-lg-4 farmStatusCol">
+					<div class="d-flex flex-column justify-content-between farmStatusContent">
+						<div class="fsPoint">
+							<span class="fsPoint_label"> Deposits in Harvest : </span>
+							<span class="fsPoint_value fMd d-inline-block w-100"> {{deposit_harv |number:'1.2'}} USD </span>
+						</div>
+					</div>
+				</div>
+				<div class="col-sm-12 col-md-6 col-lg-4 farmStatusCol">
+					<div class="d-flex flex-column justify-content-center farmStatusContent difr">
+						<div class="fsTimer_label">
+							Next Emissions Decrease In
+						</div>
+						<div class="fsTimer_value">
+							<span class="fsTimer_days">
+								 ∞ Days
+							</span>
+						</div>
+					</div>
+				</div>
+				<div class="col-sm-12 col-md-6 col-lg-4 farmStatusCol">
+					<div class="farmStatusContent">
+						<div class="fsPoint">
+							<span class="fsPoint_label"> UNI-V2 price : </span>
+							<span class="fsPoint_value"> {{uni_usd}} USD </span>
+						</div>
+						<div class="fsPoint">
+							<span class="fsPoint_label"> UNI-V2 staked : </span>
+							<span class="fsPoint_value"> {{uni_perc | number:'1.2'}} % </span>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="bannerMenu inner">
+		<div class="container">
+			<ul class="d-flex flex-wrap align-items-center justify-content-center">
+				<li>
+					<a routerLink="/faq" class="btn btn-primary btnMd">FAQ</a>
+				</li>				
+				<li>
+					<a routerLink="/" class="btn btn-primary btnMd">Home</a>
+				</li>				
+			</ul>
+		</div>	
+	</div>
+	<div class="noConnect text-center" *ngIf='!token'>
+		<div class="container">
+			<div class="noConnectCon">
+				<span class="noConnectText mr-1">You haven't connected a wallet.</span>
+				<button class="btn btn-primary btnMld" data-toggle="modal" data-target="#walletLogin">
+					Connect wallet
+				</button>
+			</div>
+		</div>
+	</div>
+	<div class="deFarm">
+		<div class="container">
+			<h2 class="sectionTitle text-center">
+				<span class="color-gradient">Deposit and farm your assets</span>
+			</h2>
+			<div class="stake_table mt-4 farm_table">
+				<table class="table">
+					<thead>
+						<tr>
+							<th>Asset</th>
+							<th>Harvest APY</th>
+							<th> Deposits</th>
+							<th> Your balance</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr *ngFor="let pair of stakepairHis">
+							<td (click) ="open_pair(pair.address)"><img src="assets/images/icon_1.png" class="ml-4 mr-2">
+								<accordion [isAnimated]="true">
+								  <accordion-group heading="{{pair.symbol}}">
+								    <div class="tdAcc">
+								    	<form class="modalform stakeForm" #stake="ngForm" autocomplete="off" novalidate>
+										<div class="row align-items-center tdAcc_depRow">
+											<div class="col-sm-6 col-md-6 col-lg-4 tdAcc_depCol">
+												<div class="tdAcc_depIp">
+														<input onkeypress="return (event.charCode == 8 || event.charCode == 46) ? null : event.charCode >= 48 && event.charCode <= 57" [ngModel]="stakeall_value" type="number" id="amount" class="form-control border-right-0" placeholder="Amount" name= "amount" #amount= "ngModel" ngModel required pattern="^\d{0,50}(\.\d{1,8})?$" [class.is-invalid] = "amount.invalid && amount.touched" (keyup)="amountKeyup(amount.value,stake)" min="0" />
+												</div>
+											</div>
+											<div class="col-sm-6 col-md-6 col-lg-2 tdAcc_depCol">
+												<div class="tdAcc_depBtn">
+													<button (click) = "stakeall(pair.balance)" class="btn btnBk"> Max </button>
+												</div>
+											</div>
+											<input name="poolid" type="hidden" [ngModel]=pair.poolid> 
+											<div class="col-sm-6 col-md-6 col-lg-3 tdAcc_depCol">
+												
+											</div>
+											
+										</div>
+										<div class="row tdAcc_depRow tdAcc_depStatus">
+											<div class="col-sm-4 col-md-4 col-lg-4 tdAcc_depCol">
+												<div class="tdAcc_sCon">
+													<p class="tdAcc_sCon_label"> Your Staked {{pair.symbol}} </p>
+													<p class="tdAcc_sCon_value"> {{pair.depo_bal}} </p>
+												</div>
+											</div>
+											<div class="col-sm-4 col-md-4 col-lg-4 tdAcc_depCol">
+												<div class="tdAcc_sCon">
+													<p class="tdAcc_sCon_label"> Total OP Earned </p>
+													<p class="tdAcc_sCon_value"> {{pair.earning}} </p>
+												</div>
+											</div>
+											<div class="col-sm-4 col-md-4 col-lg-4 tdAcc_depCol">
+												<div class="tdAcc_sCon">
+													<p class="tdAcc_sCon_label"> Your Unstaked {{pair.symbol}} </p>
+													<p class="tdAcc_sCon_value"> {{pair.balance}} </p>
+												</div>
+											</div>						
+										</div>
+										<div class="row align-items-center tdAcc_depRow">
+											<div class="col-sm-6 col-md-6 col-lg-3 col-xl-4 tdAcc_depCol">
+											</div>
+											<div class="col-sm-6 col-md-6 col-lg-3 col-xl-4 tdAcc_depCol">
+												<div class="tdAcc_depBtn">
+													<button (click) = reward(pair.poolid,pair.depo_bal) class="btn btnBk"> Claim Rewards </button>
+												</div>
+											</div>
+											<div class="col-sm-6 col-md-6 col-lg-3 col-xl-2 tdAcc_depCol">
+												<div class="tdAcc_depBtn">
+													<ng-template #popTemplate><div [innerHtml]="popupcont"></div></ng-template>
+								<button class="btn btn-none" [popover]="popTemplate" triggers="mouseenter" containerClass="mypopover"> 
+									<span class="btnText"> Vault rewards </span>
+									<i class="fas fa-arrow-right"></i>
+								</button>
+												</div>
+											</div>
+											<div class="col-sm-6 col-md-6 col-lg-3 col-xl-2 tdAcc_depCol">
+												<div class="tdAcc_depBtn">
+													<button type="submit" [disabled]="stake.invalid && stakebutton_show" (click)="unstakeFun(stake)" class="btn btnRd"> Withdraw & claim </button>
+												</div>	
+											</div>
+										</div>
+									</form>
+									</div>
+								  </accordion-group>
+								</accordion>
+								</td>
+							<td>0 %</td>
+							<td>{{pair.depo_bal}}</td>
+							<td class="">{{pair.balance}}</td>
+						</tr>
+						
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+
+
+	<div class="stake_table mt-4 table-responsive container">
+					<h5 class="stake_hd text-center">Deposit &Withdraw</h5>
+		<table datatable [dtOptions]="dtOptions" class="row-border hover">
+			<thead>
+				<tr>
+					<th>Date & Time </th>
+					<th>Type </th>
+					<th>Name </th>
+					<th>Amount</th>
+					<th>Transaction Hash</th>
+					<th>Status</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr *ngFor="let stake of stakeHis">
+					<td>{{stake.created_at | date: 'yyyy-MM-dd h:mm:ss'}}</td>
+					<td>{{stake.types}}</td>
+					<td>{{stake.currency}}</td>
+					<td>{{(stake.amount > 0) ? stake.amount :'-' }}</td>
+					<td title="{{stake.txnid}}"><a target="_blank" href="https://ropsten.etherscan.io/tx/{{stake.txnid}}" style="display: inline-block;width: 180px;white-space: nowrap;overflow: hidden !important; text-overflow: ellipsis;">{{stake.txnid}}</a></td>
+					<td class="grn_text">{{stake.status}}</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+
+
+	<div class="farmFees">
+		<div class="container">
+			<p class="text-center">
+				<span class="farmFeesValue">
+					${{deposit_harv |number:'1.2'}}
+				</span>
+				<span class="farmFeesText">
+					of deposits are auto harvesting yields.
+				</span>
+			</p>
+		</div>
+	</div>	
+</div>
+<app-footer class="inner_footer"></app-footer>

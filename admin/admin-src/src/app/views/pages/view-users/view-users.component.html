@@ -1,0 +1,235 @@
+<div class="text-center" *ngIf="loading">
+	<div class="spinner-grow text-primary loader-icon" role="status">
+		<span class="sr-only">Loading...</span>
+	</div>
+</div>
+<div class="animated fadeIn" *ngIf="per">
+	<div class="row">
+		<div class="col-md-12 mb-4">
+			<button class="btn btn-primary btn-sm pull-right" routerLink="/UQZYyKXjbJhGPFSqSzkY/pages/users">
+				Close
+			</button>
+			<tabset>
+				<tab heading="User Information">
+					<div class="form-group row">
+						<label class="col-md-2 col-form-label">Username</label>
+						<div class="col-md-6 col-form-label">
+							{{userInfo.username}}
+						</div>
+					</div>
+					<div class="form-group row">
+						<label class="col-md-2 col-form-label">Firstname</label>
+						<div class="col-md-6 col-form-label">
+							{{userInfo.firstname}}
+						</div>
+					</div>
+					<div class="form-group row">
+						<label class="col-md-2 col-form-label">Lastname</label>
+						<div class="col-md-6 col-form-label">
+							{{userInfo.lastname}}
+						</div>
+					</div>					
+					<div class="form-group row">
+						<label class="col-md-2 col-form-label">Email</label>
+						<div class="col-md-6 col-form-label">
+							{{userInfo.email}}
+						</div>
+					</div>
+					<div class="form-group row">
+						<label class="col-md-2 col-form-label">Mobile</label>
+						<div class="col-md-6 col-form-label">
+							{{userInfo.phone}}
+						</div>
+					</div>
+					<div class="form-group row">
+						<label class="col-md-2 col-form-label">DOB</label>
+						<div class="col-md-6 col-form-label">
+							{{userInfo.dob}}
+						</div>
+					</div>
+					<div class="form-group row">
+						<label class="col-md-2 col-form-label">Address</label>
+						<div class="col-md-6 col-form-label">
+							{{userInfo.address}}
+						</div>
+					</div>
+					<div class="form-group row">
+						<label class="col-md-2 col-form-label">City</label>
+						<div class="col-md-6 col-form-label">
+							{{userInfo.city}}
+						</div>
+					</div>
+					<div class="form-group row">
+						<label class="col-md-2 col-form-label">State</label>
+						<div class="col-md-6 col-form-label">
+							{{userInfo.state}}
+						</div>
+					</div>
+					<div class="form-group row">
+						<label class="col-md-2 col-form-label">Country</label>
+						<div class="col-md-6 col-form-label">
+							{{userInfo.country}}
+						</div>
+					</div>
+					<div class="form-group row">
+						<label class="col-md-2 col-form-label">Profile Picture</label>
+						<div class="col-md-6 col-form-label" *ngIf="userInfo.profile_pic!=''">
+							<a href="{{userInfo.profile_pic}}" target="_blank"><img [src]="userInfo.profile_pic || ''" style="height: 90px; width: 90px;"></a>
+						</div>
+						<div class="col-md-6 col-form-label" *ngIf="userInfo.profile_pic==''">
+							<span class="badge badge-dark">Not uploaded</span>
+						</div>
+					</div>
+				</tab>
+				<tab heading="KYC Verification">
+					<div class="form-group row">
+						<label class="col-md-2 col-form-label">KYC status</label>
+						<div class="col-md-6 col-form-label">						
+								<span class="badge badge-dark" *ngIf="userInfo.kyc_status == 0">Not uploaded</span>
+								<span class="badge badge-warning" *ngIf="userInfo.kyc_status == 1">Pending</span>
+								<span class="badge badge-danger" *ngIf="userInfo.kyc_status == 2">Rejected</span>								
+								<span class="badge badge-success" *ngIf="userInfo.kyc_status == 3">Verified</span>
+						</div>
+					</div>
+					<hr/>
+					<div *ngIf="userInfo.id_proof!=''">
+						<div class="form-group row">
+							<label class="col-md-2 col-form-label">ID Proof Front Image</label>
+							<div class="col-md-6 col-form-label">
+								<a href="{{userInfo.id_proof}}" target="_blank"><img [src]="userInfo.id_proof || ''" class="kyc-img" style="height: 90px; width: 90px;"></a>
+							</div>
+						</div>
+
+
+						<div class="form-group row">
+							<label class="col-md-2 col-form-label">ID Proof Back Image</label>
+							<div class="col-md-6 col-form-label">
+								<a href="{{userInfo.id_proof1}}" target="_blank"><img [src]="userInfo.id_proof1 || ''" class="kyc-img" style="height: 90px; width: 90px;"></a>
+							</div>
+						</div>
+
+						<div class="form-group row">
+							<label class="col-md-2 col-form-label">ID Proof Status</label>
+							<div class="col-md-6 col-form-label">
+								<span class="badge badge-dark" *ngIf="userInfo.id_status == 0">Not uploaded</span>
+								<span class="badge badge-warning" *ngIf="userInfo.id_status == 1">Pending</span>
+								<span class="badge badge-danger" *ngIf="userInfo.id_status == 2">Rejected</span>								
+								<span class="badge badge-success" *ngIf="userInfo.id_status == 3">Verified</span>
+							</div>
+						</div>
+						<div class="form-group row" *ngIf="userInfo.id_status == 1 && IDBtn">
+							<div class="col-md-6">
+								<button class="btn btn-sm btn-primary" (click)="approveKyc(1,userInfo._id)"><i class="fa fa-dot-circle-o"></i> Approve</button>
+								<button type="button" class="btn btn-sm btn-danger" (click)="rejectKyc(1)"><i class="fa fa-ban"></i> Reject</button>
+							</div>
+						</div>
+						<div *ngIf="idproofRequest">
+							<button class="btn btn-sm btn-primary" disabled> <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
+							Loading...</button>
+						</div>
+
+						<form (ngSubmit)="idf.form.valid && RejectForm(1,userInfo._id,idf)" #idf="ngForm" novalidate *ngIf="IDRejectForm">
+							<div class="form-group row">
+								<label class="col-md-2 col-form-label">Reason to reject</label>
+
+								<div class="col-md-7">
+									<textarea type="text" class="form-control" name="reject_message" [(ngModel)]="idproof.reject_message" #reject_message="ngModel" [ngClass]="{ 'is-invalid': idf.submitted && reject_message.invalid }" required ></textarea>
+									<div *ngIf="idf.submitted && reject_message.invalid" class="invalid-feedback">
+										<div *ngIf="reject_message.errors.required">Message is required</div>
+									</div>
+								</div>
+							</div>
+							<div class="form-group row">
+								<div class="col-md-6" *ngIf="!idrejectLoader">
+									<button type="submit" class="btn btn-sm btn-primary"><i class="fa fa-dot-circle-o"></i> Reject</button>
+									<button type="button" class="btn btn-sm btn-danger" (click)="cancelReject(1)"><i class="fa fa-ban"></i> Cancel</button>
+								</div>
+
+								<div class="col-md-6" *ngIf="idrejectLoader">
+									<button class="btn btn-sm btn-primary" disabled> <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
+									Loading...</button>
+								</div>
+							</div>
+						</form>
+						<hr/>
+						<div class="form-group row">
+							<label class="col-md-2 col-form-label">Selfie With Photo ID</label>
+							<div class="col-md-6 col-form-label">
+								<a href="{{userInfo.selfie_proof}}" target="_blank"><img [src]="userInfo.selfie_proof" class="kyc-img" style="height: 90px; width: 90px;"></a>
+							</div>
+						</div>
+						<div class="form-group row">
+							<label class="col-md-2 col-form-label">Selfie Proof Status</label>
+							<div class="col-md-6 col-form-label">
+								<span class="badge badge-dark" *ngIf="userInfo.selfie_status == 0">Not uploaded</span>
+								<span class="badge badge-warning" *ngIf="userInfo.selfie_status == 1">Pending</span>
+								<span class="badge badge-danger" *ngIf="userInfo.selfie_status == 2">Rejected</span>								
+								<span class="badge badge-success" *ngIf="userInfo.selfie_status == 3">Verified</span>
+							</div>
+						</div>
+						<div class="form-group row" *ngIf="userInfo.selfie_status == 1 && selfieBtn">
+							<div class="col-md-6">
+								<button class="btn btn-sm btn-primary" (click)="approveKyc(2,userInfo._id)"><i class="fa fa-dot-circle-o"></i> Approve</button>
+								<button type="button" class="btn btn-sm btn-danger" (click)="rejectKyc(2)"><i class="fa fa-ban"></i> Reject</button>
+							</div>
+						</div>
+						<div *ngIf="selfieRequest">
+							<button class="btn btn-sm btn-primary" disabled> <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
+							Loading...</button>
+						</div>
+
+						<form (ngSubmit)="f.form.valid && RejectForm(2,userInfo._id,f)" #f="ngForm" novalidate *ngIf="selfieRejectForm">
+							<div class="form-group row">
+								<label class="col-md-2 col-form-label">Reason to reject</label>
+
+								<div class="col-md-7">
+									<textarea type="text" class="form-control" name="reject_message" [(ngModel)]="selfie.reject_message" #reject_message="ngModel" [ngClass]="{ 'is-invalid': f.submitted && reject_message.invalid }" required ></textarea>
+									<div *ngIf="f.submitted && reject_message.invalid" class="invalid-feedback">
+										<div *ngIf="reject_message.errors.required">Message is required</div>
+									</div>
+								</div>
+							</div>
+							<div class="form-group row">
+								<div class="col-md-6" *ngIf="!selfieRejectLoader">
+									<button type="submit" class="btn btn-sm btn-primary"><i class="fa fa-dot-circle-o"></i> Reject</button>
+									<button type="button" class="btn btn-sm btn-danger" (click)="cancelReject(2)"><i class="fa fa-ban"></i> Cancel</button>
+								</div>
+
+								<div class="col-md-6" *ngIf="selfieRejectLoader">
+									<button class="btn btn-sm btn-primary" disabled> <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
+									Loading...</button>
+								</div>
+							</div>
+
+						</form>
+					</div>
+
+				</tab>
+				<tab heading="Wallet Balance">
+
+					<div *ngIf="userWlt.length==0" align="center">No records found</div>
+
+					<div *ngIf="userWlt.length!=0">
+						<div class="form-group row">
+							<label class="col-md-2 col-form-label"><strong> Currency Name</strong></label>
+							<div class="col-md-2 col-form-label"><strong>Amount</strong></div>
+							<div class="col-md-6 col-form-label"><strong>User Address</strong></div>
+						</div>
+						<div *ngFor="let currency of userWlt">
+
+							<div *ngIf="currency.currencyid.length!=0">
+
+							<div class="form-group row" *ngIf="currency.currencyid[0].currencySymbol!='' && currency.currencyid[0].currencySymbol!= null && currency.currencyid[0].currencySymbol!= undefined">
+								<label class="col-md-2 col-form-label">{{currency.currencyid[0].currencySymbol}}</label>
+								<div class="col-md-2 col-form-label"><input type="text" class="form-control" value="{{rounds(currency.walletbalance,8)}}" #balance> <i class="fa fa-save" (click)="updateBalance(userInfo._id,balance.value,currency.currencyid[0].currencySymbol)"></i></div>
+								<div class="col-md-6 col-form-label">{{getAddress(currency.currencyid[0].currencySymbol,currency.currencyid[0].coinType)}}</div>
+							</div>
+							</div>						
+						</div>
+					</div>
+				</tab>
+			</tabset>
+
+		</div>
+	</div>
+</div>

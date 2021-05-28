@@ -1,0 +1,85 @@
+<div class="animated fadeIn">
+  <div class="row">
+    <div class="col-sm-6 col-lg-3">
+      <div class="card text-white bg-primary">
+        <div class="card-body pb-0 cursor_pointer">
+          <div class="btn-group float-right" dropdown>
+            <i class="fa fa-list-alt"></i>
+          </div>
+          <div class="text-value">{{model.total}} USDT</div>
+          <div>Total Value</div>
+        </div>
+        
+      </div>
+    </div>
+    <div class="col-sm-6 col-lg-3">
+      <div class="card text-white bg-dark">
+        <div class="card-body pb-0 cursor_pointer" [routerLink]="['/UQZYyKXjbJhGPFSqSzkY/pages/stake-list']" [queryParams]="{ type: 'deposits'}">
+          <div class="btn-group float-right" dropdown>
+            <i class="fa fa-list-alt"></i>
+          </div>
+          <div class="text-value">{{deposits}}</div>
+          <div>Total Deposits</div>
+        </div>
+        
+      </div>
+    </div>
+    <div class="col-sm-6 col-lg-3">
+      <div class="card text-white bg-primary">
+        <div class="card-body pb-0 cursor_pointer" [routerLink]="['/UQZYyKXjbJhGPFSqSzkY/pages/pairs']">
+          <div class="btn-group float-right" dropdown>
+            <i class="fa fa-users"></i>
+          </div>
+          <div class="text-value">{{pairsCount}}</div>
+          <div>Total Pairs</div>
+        </div>
+      </div>
+    </div>    
+    <div class="col-sm-6 col-lg-3">
+      <div class="card text-white bg-info">
+        <div class="card-body pb-0 cursor_pointer" [routerLink]="['/UQZYyKXjbJhGPFSqSzkY/pages/stake-list']" [queryParams]="{ type: 'withdraws'}">
+          <div class="btn-group float-right" dropdown>
+            <i class="fa fa-list-alt"></i>
+          </div>
+          <div class="text-value">{{withdraws}}</div>
+          <div>Total Withdraws</div>
+        </div>
+      </div>
+    </div>    
+  </div>
+  <div class="row">
+    <div class="col-sm-6 col-lg-3">
+      <div class="card text-white bg-warning">
+        <div class="card-body pb-0 cursor_pointer" [routerLink]="['/UQZYyKXjbJhGPFSqSzkY/pages/stake-list']" [queryParams]="{ type: 'earns'}">
+          <div class="btn-group float-right" dropdown>
+            <i class="fa fa-list-alt"></i>
+          </div>
+          <div class="text-value">{{earnCount}}</div>
+          <div>Total Earn</div>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-6 col-lg-3">
+      <div class="card text-white bg-success">
+        <div class="card-body pb-0 cursor_pointer" [routerLink]="['/UQZYyKXjbJhGPFSqSzkY/pages/bridge-list']">
+          <div class="btn-group float-right" dropdown>
+            <i class="fa fa-list-alt"></i>
+          </div>
+          <div class="text-value">{{bridgeCount}}</div>
+          <div>Total Bridge</div>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-6 col-lg-3">
+      <div class="card text-white bg-danger">
+        <div class="card-body pb-0 cursor_pointer" [routerLink]="['/UQZYyKXjbJhGPFSqSzkY/pages/blockip']">
+          <div class="btn-group float-right" dropdown>
+            <i class="fa fa-ban"></i>
+          </div>
+          <div class="text-value">{{blockip}}</div>
+          <div>Block List</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

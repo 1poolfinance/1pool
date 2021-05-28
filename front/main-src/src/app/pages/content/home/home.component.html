@@ -1,0 +1,237 @@
+<app-header></app-header>
+<div class="main_content">
+	<div class="banner">
+		<div class="container">
+			<div class="row align-items-center">
+				<div class="col-sm-12">
+					<div class="bannerContent">
+						<div class="bannerLabel">							
+						</div>
+						<h1> 
+							<span class="color-gradient" *ngIf="cms"> {{static[0].pagetitle}} </span>
+						</h1>
+						<p *ngIf="cms" [innerHTML]="static[0].pagecontent">								
+						</p>
+						<div class="bannerMenu">
+							<ul class="d-flex flex-wrap align-items-center justify-content-center">
+								<li>
+									<a routerLink="/eth" class="btn btn-primary btnMd">ERC 20 (Ethereum) blockchain</a>
+								</li>
+								<li>
+									<a routerLink="/bnb" class="btn btn-primary btnMd">Binance Smart Chain</a>
+								</li>
+								<li>
+									<a routerLink="/transit" class="btn btn-primary btnMd">Token bridge</a>
+								</li>
+								<li>
+									<a class="btn btn-primary btnMd" href="https://onepool.gitbook.io" target="_blank">Docs</a>
+								</li>								
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="overView">
+		<div class="container">
+			<div class="row align-items-center">
+				<div class="col-sm-12 col-md-12 col-lg-6 my-3 my-lg-5">
+					<div class="overViewContent" *ngIf="cms">
+						<h2 class="sectionTitle">{{static[1].pagetitle}}</h2>
+						<ul class="sectionList">
+							<li [innerHTML]="static[1].pagecontent">									
+							</li>
+						</ul>
+					</div>
+					<div class="overViewContent" *ngIf="cms">
+						<h2 class="sectionTitle">{{static[2].pagetitle}} </h2>
+						<ul class="sectionList">
+							<li [innerHTML]="static[2].pagecontent">
+							</li>
+						</ul>
+					</div>
+				</div>
+				<div class="col-sm-12 col-md-12 col-lg-6 my-3 my-lg-5">
+					<div class="overViewImage text-center">
+						<img src="assets/images/pic/overView.png" alt="overView" />
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="features">
+		<div class="container">
+			<div class="row">
+				<div class="col-sm-6 col-md-6 col-lg-3 my-3 my-lg-5">
+					<div class="featuresContent">
+						<div class="featuresIcon">
+							<img src="assets/images/icons/lend.png" alt="lend" />
+						</div>
+						<h3 *ngIf="cms">{{static[3].pagetitle}}</h3>
+						<p *ngIf="cms" [innerHTML]="static[3].pagecontent"></p>
+					</div>
+				</div>
+				<div class="col-sm-6 col-md-6 col-lg-3 my-3 my-lg-5">
+					<div class="featuresContent">
+						<div class="featuresIcon">
+							<img src="assets/images/icons/loan.png" alt="loan" />
+						</div>
+						<h3 *ngIf="cms">{{static[4].pagetitle}} </h3>
+						<p *ngIf="cms" [innerHTML]="static[4].pagecontent"></p>
+					</div>
+				</div>
+				<div class="col-sm-6 col-md-6 col-lg-3 my-3 my-lg-5">
+					<div class="featuresContent">
+						<div class="featuresIcon">
+							<img src="assets/images/icons/valid.png" alt="valid" />
+						</div>
+						<h3 *ngIf="cms">{{static[5].pagetitle}}</h3>
+						<p *ngIf="cms" [innerHTML]="static[5].pagecontent"></p>
+					</div>
+				</div>
+				<div class="col-sm-6 col-md-6 col-lg-3 my-3 my-lg-5">
+					<div class="featuresContent">
+						<div class="featuresIcon">
+							<img src="assets/images/icons/money-exchange.png" alt="money-exchange" />
+						</div>
+						<h3 *ngIf="cms">{{static[7].pagetitle}}</h3>
+						<p *ngIf="cms" [innerHTML]="static[7].pagecontent"></p>
+					</div>
+				</div>
+			</div>	
+		</div>	
+	</div>	
+
+	<div class="farming">
+		<div class="container">
+			<div class="row align-items-center">					
+				<div class="col-sm-12 col-md-12 col-lg-6 my-3 my-lg-5">
+					<div class="farmingImage text-center">
+						<img src="assets/images/pic/farming.png" alt="farming" />
+					</div>
+				</div>
+				<div class="col-sm-12 col-md-12 col-lg-6 my-3 my-lg-5">
+					<div class="farmingContent" *ngIf="cms">
+						<h2 class="sectionTitle"> {{static[8].pagetitle}} </h2>
+						<ul class="sectionList">
+							<li [innerHTML]="static[8].pagecontent">									
+							</li>
+						</ul>
+					</div>
+					<div class="farmingContent" *ngIf="cms">
+						<h2 class="sectionTitle"> {{static[9].pagetitle}} </h2>
+						<ul class="sectionList">
+							<li [innerHTML]="static[9].pagecontent">
+							</li>
+						</ul>
+					</div>
+					<div class="farmingContent" *ngIf="cms">
+						<h2 class="sectionTitle"> {{static[10].pagetitle}} </h2>
+						<ul class="sectionList">
+							<li [innerHTML]="static[10].pagecontent">									
+							</li>
+						</ul>
+					</div>
+					<div class="farmingContent" *ngIf="cms">
+						<h2 class="sectionTitle"> {{static[11].pagetitle}} </h2>
+						<ul class="sectionList">
+							<li [innerHTML]="static[11].pagecontent">
+							</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="benefits">
+		<div class="container">
+			<div class="row justify-content-center">
+				
+				<div class="col-sm-12 col-md-6 col-lg-4 my-3 my-lg-5 benefitsCol">
+					<div class="benefitsContent">
+						
+						<div class="d-flex align-items-center benefitsIconText">
+							<div class="benefitsIcon">
+								<img src="assets/images/icons/low-cost.png" alt="low-cost" />
+							</div>
+							<div class="benefitsText" *ngIf="cms">
+								{{static[12].pagetitle}}
+							</div>
+						</div>							
+						<p *ngIf="cms" [innerHTML]="static[12].pagecontent">								
+						</p>							
+					</div>
+				</div>
+				
+				<div class="col-sm-12 col-md-6 col-lg-4 my-3 my-lg-5 benefitsCol">
+					<div class="benefitsContent">
+						
+						<div class="d-flex align-items-center benefitsIconText">
+							<div class="benefitsIcon">
+								<img src="assets/images/icons/real-world.png" alt="real-world" />
+							</div>
+							<div class="benefitsText" *ngIf="cms">
+								{{static[13].pagetitle}}
+							</div>
+						</div>
+						<p *ngIf="cms" [innerHTML]="static[13].pagecontent"> 								 
+						</p>							
+					</div>
+				</div>
+				
+				<div class="col-sm-12 col-md-6 col-lg-4 my-3 my-lg-5 benefitsCol">
+					<div class="benefitsContent">
+						<div class="d-flex align-items-center benefitsIconText">
+							<div class="benefitsIcon">
+								<img src="assets/images/icons/liq-pool.png" alt="liq-pool" />
+							</div>
+							<div class="benefitsText" *ngIf="cms">
+								{{static[14].pagetitle}}
+							</div>
+						</div>							
+						<p *ngIf="cms" [innerHTML]="static[14].pagecontent"> 								
+						</p>							
+					</div>
+				</div>					
+			</div>
+
+			<h2 class="text-center color-gradient">Roadmap</h2>
+			<div class="roadmap-cnt d-flex flex-column flex-lg-row" *ngIf="cms">
+				<div class="roadmap-txt-cnt">
+					<h3>{{static[15].pagetitle}}</h3>
+					<p [innerHTML]="static[15].pagecontent"></p>
+				</div>
+				<div class="roadmap-txt-cnt">
+					<h3>{{static[16].pagetitle}}</h3>
+					<p [innerHTML]="static[16].pagecontent"></p>
+				</div>
+				<div class="roadmap-txt-cnt">
+					<h3>{{static[17].pagetitle}}</h3>
+					<p [innerHTML]="static[17].pagecontent"></p>
+				</div>
+				<div class="roadmap-txt-cnt">
+					<h3>{{static[18].pagetitle}}</h3>
+					<p [innerHTML]="static[18].pagecontent"></p>
+				</div>
+				<div class="roadmap-txt-cnt">
+					<h3>{{static[19].pagetitle}}</h3>
+					<p [innerHTML]="static[19].pagecontent"></p>
+				</div>
+			</div>
+			
+			<div class="subscribe">
+				<div class="d-flex justify-content-center  align-items-center my-4">
+					<div class="subscribeContent">
+						<h2 *ngIf="cms">Get latest updates on 1pool.finance</h2>
+					</div>
+				</div>
+			</div>			
+		</div>
+	</div>
+
+</div>
+<app-footer></app-footer>

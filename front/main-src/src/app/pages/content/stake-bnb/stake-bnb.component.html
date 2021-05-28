@@ -1,0 +1,113 @@
+<app-header></app-header>
+<div class="main_content stake_page">
+	<div class="innerBanner">
+			<div class="container">
+				<h1 class="text-center">
+					<span class="color-gradient">Staking</span>
+				</h1>
+			</div>
+		</div>
+		
+		<div class="stakeBlock">
+			<div class="container">
+				<div class="stakeNow">
+					<div class="d-flex align-items-center justify-content-between stc_stauts_row">
+						<div class="stc_stauts_col flex-grow-1">
+							<span class="stc_stauts_label"> Available balance : </span>
+							<span class="stc_stauts_value"> {{metabalance}} BNB </span>
+						</div>
+						<div class="stc_stauts_col flex-grow-1">
+							<span class="stc_stauts_label"> Maximum stacking amount : </span>
+							<span class="stc_stauts_value"> 6000.00 ROTA </span>
+						</div>
+						<div class="stc_stauts_col flex-grow-1">
+							<span class="stc_stauts_label"> Annualized rate of return : </span>
+							<span class="stc_stauts_value"> 3.00 % - 7.00 % </span>
+						</div>
+					</div>
+
+					<form class="modalform stakeForm" #stake="ngForm" autocomplete="off" novalidate>
+					<div class="row skt_ip_row">
+						<div class="col-sm-12 col-md-6 skt_ip_col">
+							<div class="form-group stk_ip">
+								<label> Staked Amount : {{deposit_amount}}</label>
+							</div>
+							<div class="form-group stk_ip">
+								<label> Seeking Product : </label>
+
+								<select class="form-control border-right-0" id="currency" name="currency" (change)="stakepair_select($event)"  #currency="ngModel" ngModel required>
+					               <option *ngFor="let pair of stakepairHis" [value]="pair.poolid">{{pair.symbol}}</option>
+					            </select>
+							</div>
+
+
+							<input name="currency" type="hidden" [ngModel]=currency_select>
+
+
+							<div *ngIf= "currency.errors && (currency.valid || currency.touched || stake.submitted)" class="errMsg">
+				               <span *ngIf="currency.errors.required">Enter currency</span>
+				            </div>
+
+						</div>
+						<div class="col-sm-12 col-md-6 skt_ip_col">
+							<div class="form-group stk_ip">
+								<label> Available LP tokens : {{available_lp_amount}}</label>
+							</div>
+							<div class="form-group stk_ip">
+								<label> Amount of stacking : </label>
+								<input onkeypress="return (event.charCode == 8 || event.charCode == 46) ? null : event.charCode >= 48 && event.charCode <= 57" type="number" id="amount" class="form-control border-right-0" placeholder="Amount" name= "amount" #amount= "ngModel" ngModel required pattern="^\d{0,50}(\.\d{1,8})?$" [class.is-invalid] = "amount.invalid && amount.touched" (keyup)="amountKeyup(amount.value,stake)"/>
+							</div>
+
+							<div *ngIf= "amount.errors && (amount.valid || amount.touched || stake.submitted)" class="errMsg">
+				               <span *ngIf="amount.errors.required">Enter Amount</span>
+				            </div>
+
+						</div>
+						<div class="col-sm-12 col-md-6 skt_ip_col align-self-end">
+							<div class="form-group stk_ip text-right">
+								<button type="submit" class="btn" [disabled]="stake.invalid && stakebutton_show" (click)="stakeFun(stake)" *ngIf="!stakeLoader">Stack Now</button>
+            					<button type="submit" class="btn btn-blue w-100" disabled *ngIf="stakeLoader"><i class="fa fa-spinner fa-pulse fa-fw"></i></button>
+							</div>
+						</div>
+					</div>
+				</form>
+					
+					<div class="stk_notes">
+						<img src="assets/images/icons/infr-circular.png" class="align-middle mr-1" alt="infr-circular" />						
+						<span class="d-inline-block align-middle">
+							Please read the following tips carefully and choose continuosly
+						</span>
+					</div>
+					
+				</div>
+				<div class="stake_table mt-4 table-responsive">
+					<h5 class="stake_hd text-center">Deposit & Withdraw</h5>
+		<table datatable [dtOptions]="dtOptions" class="row-border hover">
+			<thead>
+				<tr>
+					<th>Date & Time </th>
+					<th>Type </th>
+					<th>Name </th>
+					<th>Amount</th>
+					<th>Transaction Hash</th>
+					<th>Status</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr *ngFor="let stake of stakeHis">
+					<td>{{stake.created_at | date: 'yyyy-MM-dd h:mm:ss'}}</td>
+					<td>{{stake.types}}</td>
+					<td>{{stake.currency}}</td>
+					<td>{{stake.amount}}</td>
+					<td title="{{stake.txnid}}"><a target="_blank" href="https://testnet.bscscan.com/tx/{{stake.txnid}}" style="display: inline-block;width: 180px;white-space: nowrap;overflow: hidden !important; text-overflow: ellipsis;">{{stake.txnid}}</a></td>
+					<td class="grn_text">{{stake.status}}</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+			</div>
+		</div>
+
+</div>
+
+<app-footer class="inner_footer"></app-footer>

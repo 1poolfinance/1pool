@@ -1,0 +1,80 @@
+<div class="app-body">
+  <notifier-container></notifier-container>
+  <main class="main d-flex align-items-center">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-5 mx-auto">
+          <div class="card-group">
+            <div class="card p-4">
+              <div class="card-body">
+                <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+                  <h1 *ngIf="tfa_form == 1">Login</h1>
+                  <p *ngIf="tfa_form == 1" class="text-muted">Sign In to your account</p>
+                  <div *ngIf="tfa_form == 1" class="input-group mb-3">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text"><i class="icon-user"></i></span>
+                    </div>
+                    <input type="text" class="form-control" placeholder="Email" autocomplete="" formControlName="email" [ngClass]="{ 'is-invalid': submitted && f.email.errors }" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$" required="">
+                    <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
+                      <div *ngIf="f.email.errors.required">Email is required</div>
+                      <div *ngIf="f.email.errors.pattern">Email must be a valid email address</div>
+                    </div>
+                  </div>
+                  <div *ngIf="tfa_form == 1" class="input-group mb-4">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text"><i class="icon-lock"></i></span>
+                    </div>
+                    <input type="password" class="form-control" placeholder="Password" autocomplete="current-password" formControlName="password" [ngClass]="{ 'is-invalid': submitted && f.password.errors }">
+
+                    <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
+                      <div *ngIf="f.password.errors.required">Password is required</div>
+                      <div *ngIf="f.password.errors.minlength">Password must be at least 6 characters</div>
+                    </div>
+                  </div>
+
+                   <div class="form-group" id="patt" [hidden]="tfa_form!=1">
+                    <div class="control-group" style="margin-left: 25px;">
+                    <div id="patternContainer"></div>
+                    <input type="hidden" name="patterncode" id="patterncode" class="form-control">
+                      </div>                      
+                   </div>
+
+                  <div *ngIf="tfa_form == 1" class="row">
+                    <div class="col-6">
+                      <button *ngIf="!postRequest" type="submit" class="btn btn-primary px-4">Login</button>
+
+                      <button *ngIf="postRequest" type="button" class="btn btn-primary px-4"><span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
+                      Loading...</button>
+                    </div>
+                  </div>
+                </form>
+                <form *ngIf="tfa_form == 0" autocomplete="off" #tfa="ngForm">
+                  <h1> TFA Login</h1>
+                  <p class="text-muted">TFA</p>
+                 
+                  <div class="input-group mb-4" style="margin-top: 40px;">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text"><i class="icon-lock"></i></span>
+                    </div>
+                    <input type="text" class="form-control" name="secret" ngModel #tfa="ngModel"  [(ngModel)]="tfa_inf.secret" [ngClass]="{ 'is-invalid': submitted && f.password.errors }"placeholder="Enter 6 digit code" pattern="^\d{6}$" required onkeypress="return (event.charCode == 8 || event.charCode == 46 || event.charCode == 13) ? null : event.charCode >= 48 && event.charCode <= 57" autocomplete="off">
+                  </div>
+                  <br>
+                  <br>                
+                  <div class="row">
+                    <div class="col-6">
+                      <button  type="submit" (click)="tfa_status(tfa)" *ngIf="!loginLoader" class="btn btn-primary px-4">Submit</button>
+                      <button  type="button" *ngIf="loginLoader" class="btn btn-primary px-4"><span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
+                      Loading...</button>
+                    </div>
+                   
+                  </div>
+                </form>
+              </div>
+
+            </div>           
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>

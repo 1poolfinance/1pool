@@ -1,0 +1,50 @@
+<div class="text-center" *ngIf="loading">
+	<div class="spinner-grow text-primary loader-icon" role="status">
+		<span class="sr-only">Loading...</span>
+	</div>
+</div>
+
+<div class="animated fadeIn" [style.display]="(actionType === 'all')?'block':'none'">
+<div class="row">
+		<div class="col-lg-12">
+			<div class="card">
+				<div class="card-header">
+					<i class="fa fa-align-justify"></i> Users
+				</div>
+				<div class="card-body">
+					<mat-form-field>
+						<input matInput placeholder="Search" #input>					
+					</mat-form-field>
+					
+					<mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort>
+						<ng-container matColumnDef="userAdd">
+							<mat-header-cell *matHeaderCellDef mat-sort-header>User Address </mat-header-cell>
+							<mat-cell *matCellDef="let element"> {{element.userAdd}} </mat-cell>
+						</ng-container>
+						<ng-container matColumnDef="randId">
+							<mat-header-cell *matHeaderCellDef mat-sort-header>Random Id </mat-header-cell>
+							<mat-cell *matCellDef="let element"> {{element.randId}} </mat-cell>
+						</ng-container>	
+						<ng-container matColumnDef="wallet">
+							<mat-header-cell *matHeaderCellDef mat-sort-header> Wallet Amount</mat-header-cell>
+							<mat-cell *matCellDef="let element"> {{element.wallet[0].amount}}  {{element.wallet[0].currency}}</mat-cell>
+						</ng-container>	
+
+						<ng-container matColumnDef="updated_at">
+							<mat-header-cell *matHeaderCellDef mat-sort-header> Date & Time </mat-header-cell>
+							<mat-cell *matCellDef="let element"> {{element.updated_at | date: 'yyyy-MM-dd h:mm:ss'}} </mat-cell>
+						</ng-container>
+
+						<mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+						<mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+					</mat-table>
+					<div *ngIf="displayNoRecords" class="norecords">No records found</div>
+					<mat-paginator [length]="usersCount" [pageSizeOptions]="[10, 25, 50, 100]" showFirstLastButtons></mat-paginator>
+
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+

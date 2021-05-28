@@ -1,0 +1,138 @@
+<div class="text-center" *ngIf="loading">
+	<div class="spinner-grow text-primary loader-icon" role="status">
+		<span class="sr-only">Loading...</span>
+	</div>
+</div>
+<div class="animated fadeIn" *ngIf="actionType">
+	<div class="row">
+		<div class="col-md-12 mb-4">
+
+			<tabset>
+				<tab heading="Password">
+					<div class="card">
+						<div class="card-header">
+							<strong>Change Password</strong>
+						</div>
+						<form [formGroup]="passwordForm" (ngSubmit)="onPassword()">
+							<div class="card-body">
+
+								<div class="form-group row">
+									<label class="col-md-3 col-form-label" for="cur_pass">Current Password</label>
+									<div class="col-md-6">
+										<input type="password" formControlName="cur_pass" class="form-control" [ngClass]="{ 'is-invalid': passSubmitted && p.cur_pass.errors }">
+										<div *ngIf="passSubmitted && p.cur_pass.errors" class="invalid-feedback">
+											<div *ngIf="p.cur_pass.errors.required">Current password is required</div>
+										</div>
+									</div>
+								</div>
+								<div class="form-group row">
+									<label class="col-md-3 col-form-label" for="new_pass">New Password</label>
+									<div class="col-md-6">
+										<input type="password" formControlName="new_pass" class="form-control" [ngClass]="{ 'is-invalid': passSubmitted && p.new_pass.errors }">
+										<div *ngIf="passSubmitted && p.new_pass.errors" class="invalid-feedback">
+											<div *ngIf="p.new_pass.errors.required">New password is required</div>
+										</div>
+									</div>
+								</div>
+								<div class="form-group row">
+									<label class="col-md-3 col-form-label" for="confirm_pass">Confirm New Password</label>
+									<div class="col-md-6">
+										<input type="password" formControlName="confirm_pass" class="form-control" [ngClass]="{ 'is-invalid': passSubmitted && p.confirm_pass.errors }">
+										<div *ngIf="passSubmitted && p.confirm_pass.errors" class="invalid-feedback">
+											<div *ngIf="p.confirm_pass.errors.required">Confirm password is required</div>
+											<div *ngIf="p.confirm_pass.errors.confirm_pass">Passwords must match</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="card-footer">
+								<div *ngIf="postRequest==''">
+									<button class="btn btn-sm btn-primary"><i class="fa fa-dot-circle-o"></i> Submit</button>
+									<button type="reset" class="btn btn-sm btn-danger"><i class="fa fa-ban"></i> Reset</button>
+								</div>
+								<div *ngIf="postRequest=='yes'">
+									<button class="btn btn-sm btn-primary" disabled> <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
+									Loading...</button>
+								</div>
+							</div>
+						</form>
+					</div>
+				</tab>
+
+				<tab heading="My Profile">
+					<div class="card">
+						<div class="card-header">
+							<strong>Profile Settings</strong>
+						</div>
+						<form (ngSubmit)="f.form.valid && onProfile()" #f="ngForm" novalidate>
+							<div class="card-body">
+
+								<div class="form-group row">
+									<label class="col-md-3 col-form-label">Email</label>
+									<div class="col-md-6">
+										<input type="text" name="ownermail" class="form-control" [(ngModel)]="modelProfile.ownermail" #ownermail="ngModel" readonly>
+									</div>
+								</div>
+								<div class="form-group row">
+									<label class="col-md-3 col-form-label">Username</label>
+									<div class="col-md-6">
+										<input type="text" name="username" class="form-control" [(ngModel)]="modelProfile.username" #username="ngModel" [ngClass]="{ 'is-invalid': f.submitted && username.invalid }" required onkeypress="return ((event.charCode > 64 && event.charCode < 91) || (event.charCode > 96 && event.charCode < 123) || event.charCode == 8)">
+										<div *ngIf="f.submitted && username.invalid" class="invalid-feedback">
+											<div *ngIf="username.errors.required">Username is required</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="card-footer">
+								<div *ngIf="postRequest==''">
+									<button class="btn btn-sm btn-primary"><i class="fa fa-dot-circle-o"></i> Submit</button>
+								</div>
+								<div *ngIf="postRequest=='yes'">
+									<button class="btn btn-sm btn-primary" disabled> <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
+									Loading...</button>
+								</div>
+							</div>
+						</form>
+					</div>
+				</tab>
+				<tab heading="TFA">
+					<div class="card">
+						<div class="card-header">
+							<strong>Two Factor Authentication</strong>
+						</div>
+						<form class="setting-form" name="tfa-enable" #t="ngForm" novalidate autocomplete="off" >
+							<p *ngIf="modelProfile.tfa_status == 1">High account security : TFA Authentication is <span class="text-success">ENABLED</span></p>
+							<p *ngIf="modelProfile.tfa_status == 0">Low account security : TFA Authentication is <span class="text-danger">DISABLED</span></p>
+							<div class="d-xl-flex flex-wrap" *ngIf="modelProfile.tfa_status == 0">
+								<div class="qr-code-cnt mr-2 mb-2">
+									<img [src] ="modelProfile.tfa_url ||''"  alt="" class="img-fluid">
+								</div>
+								<div class="copy-div">
+									<input type="text" placeholder="TFA code" class="form-control" placeholder="{{modelProfile.tfa_code}}" readonly style="color:black">
+									<span class="copy-icon" (click)="copyText(modelProfile.tfa_code)" style="cursor: pointer;"><i class="fa fa-clone cursor_pointer" aria-hidden="true"></i></span>
+								</div>
+							</div>
+							<div class="col-xl-6 mt-2">
+								<div class="form-label">Authentication Code</div>
+								<input type="text" class="form-control full-wd" name="secret" ngModel #tfa="ngModel" [class.is-invalid] = "tfa.invalid && tfa.touched" placeholder="Enter 6 digit code" pattern="^\d{6}$" required onkeypress="return (event.charCode == 8 || event.charCode == 46 || event.charCode == 13) ? null : event.charCode >= 48 && event.charCode <= 57" autocomplete="off">
+								<div *ngIf= "tfa.errors && (tfa.valid || tfa.touched || t.submitted)" class="errMsg">
+									<span *ngIf="tfa.errors.required">Enter Authentication Code</span>
+									<span *ngIf="tfa.errors.pattern">Enter only 6 digits</span>
+								</div>
+							</div>
+							<div class="card-footer mt-3">
+								<div *ngIf="postRequest==''">
+									<button class="btn btn-sm btn-primary" (click)="tfaStatus(t)"><i class="fa fa-dot-circle-o"></i> Submit</button>
+								</div>
+								<div *ngIf="postRequest=='yes'">
+									<button class="btn btn-sm btn-primary" disabled> <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
+									Loading...</button>
+								</div>
+							</div>
+						</form>
+					</div>
+				</tab>
+			</tabset>
+		</div>
+	</div>
+</div>

@@ -1,0 +1,56 @@
+	<div class="row">
+		<div class="col-lg-12">
+			<div class="card">
+				<div class="card-header">
+					<i class="fa fa-align-justify"></i> Deposit List
+				</div>
+				<div class="card-body">
+					<mat-form-field>
+						<input matInput placeholder="Search" #input>
+					</mat-form-field>
+					<button style="float: right;" class="btn btn-success" (click)="my_profit_excel()">Export</button>
+					<mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort>			
+
+						<ng-container matColumnDef="user">
+							<mat-header-cell *matHeaderCellDef mat-sort-header>User Name </mat-header-cell>
+							<mat-cell *matCellDef="let element"> {{element.user}} </mat-cell>
+						</ng-container>
+						<ng-container matColumnDef="amount">
+							<mat-header-cell *matHeaderCellDef mat-sort-header>Amount </mat-header-cell>
+							<mat-cell *matCellDef="let element"> {{element.amount}} </mat-cell>
+						</ng-container>
+						<ng-container matColumnDef="txnid">
+							<mat-header-cell *matHeaderCellDef mat-sort-header>Txn. Id </mat-header-cell>
+							<mat-cell *matCellDef="let element">								{{element.txnid}}
+							</mat-cell>
+						</ng-container>
+						<ng-container matColumnDef="currency">
+							<mat-header-cell *matHeaderCellDef mat-sort-header>Currency </mat-header-cell>
+							<mat-cell *matCellDef="let element"> {{element.currency}} </mat-cell>
+						</ng-container>
+						<ng-container matColumnDef="status">
+							<mat-header-cell *matHeaderCellDef mat-sort-header> Status </mat-header-cell>
+							<mat-cell color="red" *matCellDef="let element">
+								<span class="badge badge-success" *ngIf="element.status== 'completed'">Completed</span>
+							</mat-cell>
+						</ng-container>
+						
+						<ng-container matColumnDef="created_at">
+							<mat-header-cell *matHeaderCellDef mat-sort-header> Created date </mat-header-cell>
+							<mat-cell *matCellDef="let element"> {{element.created_at | date: 'yyyy-MM-dd h:mm:ss'}} </mat-cell>
+						</ng-container>				
+
+						<mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+						<mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+
+					</mat-table>
+
+					<div *ngIf="displayNoRecords" class="norecords" >No records found</div>
+
+					<mat-paginator [length]="depositCount" [pageSize]="10"
+					[pageSizeOptions]="[10, 25, 50, 100]" showFirstLastButtons></mat-paginator>
+
+				</div>
+			</div>
+		</div>
+	</div>

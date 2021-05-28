@@ -1,0 +1,268 @@
+<tabset>
+	<tab heading="Support List">
+		<div class="text-center" *ngIf="loading">
+			<div class="spinner-grow text-primary loader-icon" role="status">
+				<span class="sr-only">Loading...</span>
+			</div>
+		</div>
+<div [style.display]="(actionType === 'all')?'block':'none'">
+	<div class="row">
+		<div class="col-lg-12">
+			<div class="card">
+				<div class="card-header">
+					<i class="fa fa-align-justify"></i> Support List
+				</div>
+				<div class="card-body">
+					<mat-form-field>						
+						<input matInput placeholder="Search" #input>
+					</mat-form-field>
+					<mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort>
+
+						<ng-container matColumnDef="username">
+							<mat-header-cell *matHeaderCellDef mat-sort-header>Username </mat-header-cell>
+							<mat-cell *matCellDef="let element"> {{element.username}} </mat-cell>
+						</ng-container>
+						<ng-container matColumnDef="subject">
+							<mat-header-cell *matHeaderCellDef mat-sort-header> Subject </mat-header-cell>
+							<mat-cell *matCellDef="let element"> {{element.subject}} </mat-cell>
+						</ng-container>
+						
+						<ng-container matColumnDef="created_at">
+							<mat-header-cell *matHeaderCellDef mat-sort-header> Date & Time </mat-header-cell>
+							<mat-cell *matCellDef="let element"> {{element.created_at | date: 'yyyy-MM-dd H:mm:ss'}} </mat-cell>
+						</ng-container>
+
+						<ng-container matColumnDef="status">
+							<mat-header-cell *matHeaderCellDef mat-sort-header> Status </mat-header-cell>
+							<mat-cell color="red" *matCellDef="let element">
+								<span class="badge badge-success" *ngIf="element.status===0">New</span>
+								<span class="badge badge-primary" *ngIf="element.status===1">Replied</span>	
+								<span class="badge badge-danger" *ngIf="element.status===2">Closed</span>
+							</mat-cell>
+						</ng-container>
+
+						<ng-container matColumnDef="action">
+							<mat-header-cell *matHeaderCellDef> Action </mat-header-cell>
+							<mat-cell *matCellDef="let element">
+								<button mat-icon-button md-18 color="warn" (click)="redirectToEdit(element._id)" matTooltip="Edit" matTooltipPosition="above">
+									<i class="material-icons">visibility</i>
+								</button>
+							</mat-cell>
+						</ng-container>
+
+						<mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+						<mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+
+					</mat-table>
+
+					<div *ngIf="displayNoRecords" class="norecords" >No records found</div>
+
+					<mat-paginator [length]="supportCount" [pageSize]="10"
+					[pageSizeOptions]="[10, 25, 50, 100]"
+					showFirstLastButtons
+					></mat-paginator>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+</tab>
+<tab heading="Support Category">
+				<div class="card">
+						<div class="card-header">
+							<strong>Add Category</strong>
+						</div>
+						<form (ngSubmit)="f.form.valid && AddCate(f)" #f="ngForm" novalidate>
+							<div class="card-body">
+								<div class="form-group row">
+									<label class="col-md-3 col-form-label">Category</label>
+									<div class="col-md-6">
+										<input type="text" class="form-control" name="category" ngModel #category="ngModel" [ngClass]="{ 'is-invalid': f.touched && category.invalid }" required minlength="4" />
+										<div *ngIf="f.touched && category.invalid" class="invalid-feedback">
+											<div *ngIf="category.errors.required"> Category is required</div>
+											<div *ngIf="category.errors.minlength"> Minimum 4 letters required</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="card-footer">
+								<div *ngIf="!categoryLoader">
+									<button class="btn btn-sm btn-primary" [disabled]="!f.form.valid"><i class="fa fa-dot-circle-o"></i> Submit</button>									
+								</div>
+								<div *ngIf="categoryLoader">
+									<button class="btn btn-sm btn-primary" disabled> <span class="spinner-grow spinner-grow-sm" aria-hidden="true"></span>
+									Loading...</button>
+								</div>
+							</div>
+						</form>
+					</div>
+<div [style.display]="(actionType === 'all')?'block':'none'">
+	<div class="row">
+		<div class="col-lg-12">
+			<div class="card">
+				<div class="card-header">
+					<i class="fa fa-align-justify"></i> Category List
+				</div>
+				<div class="card-body">
+					<mat-form-field>						
+						<input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+					</mat-form-field>
+					<mat-table [dataSource]="dataSource2" class="" >
+
+						<ng-container matColumnDef="category">
+							<mat-header-cell *matHeaderCellDef >Category </mat-header-cell>
+							<mat-cell *matCellDef="let element"> {{element.category}} </mat-cell>
+						</ng-container>					
+						
+						<ng-container matColumnDef="created_at">
+							<mat-header-cell *matHeaderCellDef > Created Date </mat-header-cell>
+							<mat-cell *matCellDef="let element"> {{element.created_at | date: 'yyyy-MM-dd H:mm:ss'}} </mat-cell>
+						</ng-container>
+
+						<ng-container matColumnDef="status">
+							<mat-header-cell *matHeaderCellDef > Status </mat-header-cell>
+							<mat-cell color="red" *matCellDef="let element">
+								<span class="badge badge-success" *ngIf="element.status == 'Active'">Active</span>
+								<span class="badge badge-danger" *ngIf="element.status == 'Deactive'">Deactive</span>							
+							</mat-cell>
+						</ng-container>
+
+						<ng-container matColumnDef="action">
+							<mat-header-cell *matHeaderCellDef> Action </mat-header-cell>
+							<mat-cell *matCellDef="let element">
+								<button mat-icon-button md-18 color="warn" (click)="openConfirmationDialog(element._id,1)" matTooltip="Deactivate" matTooltipPosition="above" *ngIf="element.status=='Active'">
+									<i class="material-icons">lock_open</i>
+								</button>
+								<button mat-icon-button md-18 color="warn" (click)="openConfirmationDialog(element._id,0)" matTooltip="Activate" matTooltipPosition="above" *ngIf="element.status=='Deactive'">
+									<i class="material-icons">lock</i>
+								</button>
+								<button mat-icon-button md-18 color="warn" (click)="deleteConfirmationDialog(element._id)" matTooltip="Delete" matTooltipPosition="above">
+											<i class="material-icons">delete</i>
+										</button>
+							</mat-cell>
+						</ng-container>
+						<mat-header-row *matHeaderRowDef="displayedColumns2"></mat-header-row>
+						<mat-row *matRowDef="let row; columns: displayedColumns2;"></mat-row>
+
+					</mat-table>
+					<div *ngIf="displayNoRecords2" class="norecords" >No records found</div>
+
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+</tab>
+</tabset>
+
+
+
+<div class="card" *ngIf="actionType==='edit'">
+	<div class="card-header">
+		<strong>
+			View Support Details
+		</strong>
+		<button class="btn btn-primary btn-sm pull-right" (click)="cancelToEdit()">
+						Close
+		</button>
+	</div>
+	<form (ngSubmit)="f.form.valid && onSubmit(f)" #f="ngForm" novalidate>
+		<div class="card-body">
+
+			<div class="form-group row">
+				<label class="col-md-3 col-form-label" for="">Username</label>
+				<div class="col-md-6 col-form-label">
+					{{viewDetail.username}}
+				</div>
+			</div>
+			<div class="form-group row">
+				<label class="col-md-3 col-form-label" for="">Subject</label>
+				<div class="col-md-6 col-form-label">
+					{{viewDetail.subject}}
+				</div>
+			</div>
+			<div class="form-group row">
+				<label class="col-md-3 col-form-label" for="">Category</label>
+				<div class="col-md-6 col-form-label">
+					{{viewDetail.category}}
+				</div>
+			</div>			
+			<div class="form-group row">
+				<label class="col-md-3 col-form-label" for="">Message</label>
+				<div class="col-md-6 col-form-label">
+					{{message}}
+				</div>
+			</div>
+			<div class="form-group row">
+				<label class="col-md-3 col-form-label" for="">Created Date</label>
+				<div class="col-md-6 col-form-label">
+					{{viewDetail.created_at | date: 'yyyy-MM-dd H:mm:ss'}}
+				</div>
+			</div>
+				<div class="form-group row"  *ngIf="attach !=''">
+				<label class="col-md-3 col-form-label" for="">Attachment</label>
+				<div class="col-md-6 col-form-label">
+					<a href="{{attach}}" target="_blank"><img src="{{attach}}" alt="" height="100" wight="100"></a>
+				</div>
+			</div>
+		</div>
+
+		<div class="card-header">
+			<strong>
+				Reply Message:
+			</strong>
+		</div>
+		<div class="card-body">	
+			<div *ngIf="replymsg.length > 0">
+			<div class="form-group row" *ngFor="let reply of replymsg">
+				<label class="col-md-3 col-form-label">
+				<span *ngIf="reply.replyBy == 0 ">Admin Reply</span>
+				<span *ngIf="reply.replyBy == 1 ">User Reply</span>
+			</label>
+				<div class="col-md-6 col-form-label">
+					<p>Date: {{reply.created_at | date: 'yyyy-MM-dd H:mm:ss'}}</p>
+					<p>Message: {{reply.description}}</p>	
+					<p *ngIf="reply.attachment!=''">Attachment:</p> <a href="{{attachment}}" target="_blank"><img [src]="reply.attachment" height="100" wight="100"></a>
+				</div>
+			</div>
+		</div>
+
+			<div class="form-group row" *ngIf="viewDetail.ticket_status==0">
+				<label class="col-md-3 col-form-label">Reply Message</label>		
+				<div class="col-md-9">
+					<textarea type="text" name="admin_reply" ngModel #admin_reply="ngModel" [ngClass]="{ 'is-invalid': f.submitted && admin_reply.invalid }" required rows="4" cols="35"></textarea>	
+					 <div *ngIf="admin_reply.invalid && admin_reply.touched" class="help-block text-danger">Description is required</div>			
+					
+				</div>
+			</div>
+			<div>
+
+			<div class="form-group row" *ngIf="viewDetail.ticket_status==0">
+				<label class="col-md-3 col-form-label">Attachment if any</label>
+				<div class="col-md-6 col-form-label">				
+					<input type="file" id="file" #file (change)="showMyImage(file.files, $event, 'thumbnil')" name="reference_proof" #reference_proof="ngModel" ngModel accept="image/*" >
+				</div>
+				<img class="mr-2" id="thumbnil" alt="" height="100" wight="100">
+			</div>		
+
+   <div class="form-group row" *ngIf="viewDetail.ticket_status==0">
+   	<label class="col-md-3 col-form-label">Close</label>
+				<div class="col-md-6 col-form-label">
+      <input type="checkbox" class="form-check-input" name="ticketStatus" #ticketStatus="ngModel" ngModel>
+    </div>
+   </div>	
+  </div>
+
+		</div>
+		<div class="card-footer" *ngIf="viewDetail.ticket_status==0">
+			<div *ngIf="postRequest ===''">
+				<button class="btn btn-sm btn-primary" [disabled]="!f.form.valid"><i class="fa fa-dot-circle-o"></i> Submit</button>
+				<button type="button" class="btn btn-sm btn-danger" (click)="cancelToEdit()"><i class="fa fa-ban"></i> Cancel</button>
+			</div>
+			<div *ngIf="postRequest=='yes'">
+				<button class="btn btn-sm btn-primary" disabled> <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
+				Loading...</button>
+			</div>
+		</div>
+	</form>
+</div>

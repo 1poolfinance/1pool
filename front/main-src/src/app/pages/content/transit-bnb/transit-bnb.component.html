@@ -1,0 +1,102 @@
+<app-header></app-header>
+<div class="main_content stake_page">
+    <div class="innerBanner">
+        <div class="container">
+            <h1 class="text-center">
+                <span class="color-gradient">Token Bridge</span>
+            </h1>
+        </div>
+    </div>
+
+    <div class="stakeBlock">
+        <div class="container">
+            <div class="stakeNow transitblock">
+                    <form class="modalform stakeForm" #eth_op_form="ngForm" autocomplete="off" novalidate>
+                <div class="row skt_ip_row">
+                    <div class="col-md-12">
+                        <h4 class="text-white"> BEP20 to ERC20 </h4>
+                    </div>
+                    <div class="col-sm-12 col-md-6 skt_ip_col dropdown user-dropdown">
+
+                        <div class="form-group stk_ip">
+                            <label> Select a token : </label>
+
+                            <select (change)="change_fun($event)" class="form-control border-right-0" id="currency" name="currency" required>
+                                   <option disabled value="">Select Currency</option>
+                                   <option value="ETH1pool">BNB 1pool</option>
+                                </select>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-md-6 skt_ip_col">
+                        <div class="form-group stk_ip">
+                            <label> Balance : <span>{{eth_bal_op}}</span></label>
+                            <input onkeypress="return (event.charCode == 8 || event.charCode == 46) ? null : event.charCode >= 48 && event.charCode <= 57" type="text" name="amount_" ngModel required class="form-control" placeholder="Enter Amount" />
+                        </div>
+                    </div>
+
+                    <div class="col-sm-12 col-md-12 skt_ip_col align-self-end">
+                        <div class="form-group stk_ip pb-lg-0 mb-lg-0 text-right">
+                            <button (click)="approve_func()" *ngIf="approve_btn" class="btn mr-lg-3">
+                                Approve
+                            </button>
+                            <button class="btn" *ngIf="transit_btn" type="submit" (click)="deposit_ethop(eth_op_form)">
+                                Create crosschain assets
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                </form>
+
+                <form class="" #ethtobnb="ngForm" autocomplete="off" novalidate>
+                <div class="row skt_ip_row">
+                    <div class="col-md-6 col-sm-12">
+                        <h4 class="text-white"> Transit record </h4>
+                    </div>
+                    <div class="col-sm-12 col-md-4 skt_ip_col">
+                        <div class="form-group stk_ip mb-0">
+                            <input type="text" name="txid_" ngModel class="form-control" placeholder="Please Input Ethereum Transaction Hash" />
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-md-2 skt_ip_col">
+                        <div class="form-group stk_ip">
+                            <button (click)="withdraw_bnb(ethtobnb)" type="submit" class="btn btn-outline mr-lg-3">
+                                Submit
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                </form>
+
+            </div>
+
+
+
+            <div class="stake_table mt-4 table-responsive">
+                    <h5 class="stake_hd text-center">Transactions</h5>
+        <table datatable [dtOptions]="dtOptions" class="row-border hover">
+            <thead>
+                <tr>
+                    <th>Date & Time </th>
+                    <th>Currency </th>
+                    <th>Amount</th>
+                    <th>Transaction Hash</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let stake of stakeHis">
+                    <td>{{stake.date | date: 'yyyy-MM-dd h:mm:ss'}}</td>
+                    <td>{{stake.currency}}</td>
+                    <td>{{stake.amount}}</td>
+                    <td title="{{stake.txnid}}"><a target="_blank" href="https://ropsten.etherscan.io/tx/{{stake.transactionid}}" style="display: inline-block;width: 180px;white-space: nowrap;overflow: hidden !important; text-overflow: ellipsis;">{{stake.transactionid}}</a></td>
+                    <td class="grn_text">{{stake.status}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+
+        </div>
+    </div>
+</div>
+<app-footer class="inner_footer"></app-footer>

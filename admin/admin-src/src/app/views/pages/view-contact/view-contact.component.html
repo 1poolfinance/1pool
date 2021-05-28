@@ -1,0 +1,85 @@
+<div class="card">
+	<div class="card-header">
+		<strong>
+			User Query Details
+		</strong>
+		<button class="btn btn-primary btn-sm pull-right" routerLink="/UQZYyKXjbJhGPFSqSzkY/pages/contactus">
+						Close
+					</button>
+	</div>
+	<form (ngSubmit)="f.form.valid && onSubmit(f)" #f="ngForm" novalidate>
+		<div class="card-body">
+
+			<div class="form-group row">
+				<label class="col-md-3 col-form-label" for="">Name</label>
+				<div class="col-md-6">
+					{{viewDetail.name}}
+				</div>
+			</div>
+			<div class="form-group row">
+				<label class="col-md-3 col-form-label" for="">Email</label>
+				<div class="col-md-6">
+					{{viewDetail.emailid}}
+				</div>
+			</div>
+			<div class="form-group row">
+				<label class="col-md-3 col-form-label" for="">Subject</label>
+				<div class="col-md-6">
+					{{viewDetail.subject}}
+				</div>
+			</div>			
+			<div class="form-group row">
+				<label class="col-md-3 col-form-label" for="">Message</label>
+				<div class="col-md-6">
+					{{viewDetail.message}}
+				</div>
+			</div>
+			<div class="form-group row">
+				<label class="col-md-3 col-form-label" for="">Created Date</label>
+				<div class="col-md-6">
+					{{viewDetail.created_at | date: 'yyyy-MM-dd H:mm:ss'}}
+				</div>
+			</div>
+		</div>
+
+		<div class="card-header">
+			<strong>
+				Reply Message:
+			</strong>
+		</div>
+		<div class="card-body">	
+			<div class="form-group row" *ngIf="viewDetail.status===1">
+				<label class="col-md-3 col-form-label">Reply Message</label>			
+				<div class="col-md-6">
+					<p>{{viewDetail.reply}}</p>						
+				</div>
+			</div>
+			<div class="form-group row" *ngIf="viewDetail.status===1">
+				<label class="col-md-3 col-form-label">Replied Date</label>				
+				<div class="col-md-6">
+					{{viewDetail.updated_at | date: 'yyyy-MM-dd H:mm:ss'}}
+				</div>
+			</div>
+			<div class="form-group row" *ngIf="viewDetail.status===0">			
+				<label class="col-md-3 col-form-label">Reply Message</label>							
+				<div class="col-md-6">
+					<textarea name="reply" rows="3" class="form-control" [(ngModel)]="model.reply" #reply="ngModel" [ngClass]="{ 'is-invalid': f.submitted && reply.invalid }" required></textarea>
+					<div *ngIf="f.submitted && reply.invalid" class="invalid-feedback">
+						<div *ngIf="reply.errors.required">Reply message is required</div>
+					</div>
+				</div>
+			</div>
+			
+		</div>
+		<div class="card-footer" *ngIf="viewDetail.status===0">
+			<div *ngIf="postRequest==''">
+				<button class="btn btn-sm btn-primary"><i class="fa fa-dot-circle-o"></i> Submit</button>
+				<button type="button" class="btn btn-sm btn-danger" routerLink="/UQZYyKXjbJhGPFSqSzkY/pages/contactus"><i class="fa fa-ban"></i> Cancel</button>
+			</div>
+			<div *ngIf="postRequest=='yes'">
+				<button class="btn btn-sm btn-primary" disabled> <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
+				Loading...</button>
+			</div>
+		</div>
+	</form>
+</div>

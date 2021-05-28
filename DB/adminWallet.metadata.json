@@ -1,0 +1,1 @@
+{"indexes":[{"v":{"$numberInt":"2"},"key":{"_id":{"$numberInt":"1"}},"name":"_id_"},{"v":{"$numberInt":"2"},"unique":true,"key":{"ownermail":{"$numberInt":"1"}},"name":"ownermail_1","background":true}],"uuid":"686e3381bb1b499a8723ab156a1417fd","collectionName":"adminWallet"}

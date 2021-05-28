@@ -1,0 +1,59 @@
+  <div class="text-center" *ngIf="loading">
+  <div class="spinner-grow text-primary loader-icon" role="status">
+    <span class="sr-only">Loading...</span>
+  </div>
+</div>
+
+<div class="animated fadeIn" [style.display]="(actionType === 'all')?'block':'none'">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-header">
+         Stake History
+        </div>        
+        <div class="card-body">
+          <mat-form-field>
+            <input matInput placeholder="Search" #input>
+          </mat-form-field>
+          <mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort matSortActive="datetime" matSortDirection="desc">
+            <ng-container matColumnDef="userAdd">
+              <mat-header-cell *matHeaderCellDef mat-sort-header>User Address </mat-header-cell>
+              <mat-cell *matCellDef="let element"> {{element.userAdd}} </mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="txnid">
+              <mat-header-cell *matHeaderCellDef mat-sort-header>Txn. ID </mat-header-cell>
+              <mat-cell *matCellDef="let element"> {{element.txnid}} </mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="currency">
+              <mat-header-cell *matHeaderCellDef mat-sort-header> Currency </mat-header-cell>
+              <mat-cell *matCellDef="let element"> {{element.currency}} </mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="currency_type">
+              <mat-header-cell *matHeaderCellDef mat-sort-header> Currency Type </mat-header-cell>
+              <mat-cell *matCellDef="let element"> {{element.currency_type}} </mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="amount">
+              <mat-header-cell *matHeaderCellDef mat-sort-header> Amount </mat-header-cell>
+              <mat-cell *matCellDef="let element"> {{element.amount}} </mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="types">
+              <mat-header-cell *matHeaderCellDef mat-sort-header> Type </mat-header-cell>
+              <mat-cell *matCellDef="let element"> {{element.types}} </mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="status">
+              <mat-header-cell *matHeaderCellDef mat-sort-header> Status </mat-header-cell>
+              <mat-cell *matCellDef="let element"> {{element.status}} </mat-cell>
+            </ng-container> 
+            <ng-container matColumnDef="updated_at">
+              <mat-header-cell *matHeaderCellDef mat-sort-header> Date & Time</mat-header-cell>
+              <mat-cell *matCellDef="let element"> {{element.updated_at | date:'yyyy-MM-dd h:mm:ss'}} </mat-cell>
+            </ng-container>
+            <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+            <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>            
+          </mat-table>
+          <mat-paginator [length]="logcount" [pageSizeOptions]="[10, 25, 50, 100]" showFirstLastButtons></mat-paginator>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
