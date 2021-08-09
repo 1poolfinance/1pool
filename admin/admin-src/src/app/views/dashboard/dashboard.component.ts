@@ -165,39 +165,39 @@ export class DashboardComponent implements OnInit {
 
     if (type == "user") {
       if (data == 'active') {
-        this.router.navigate(['/UQZYyKXjbJhGPFSqSzkY/pages/users'], { queryParams: { type: 'active' } });
+        this.router.navigate(['/yDKXkjbhUFZYGEUdINOs/pages/users'], { queryParams: { type: 'active' } });
       }
       else if (data == 'inactive') {
-        this.router.navigate(['/UQZYyKXjbJhGPFSqSzkY/pages/inactive/users']);
+        this.router.navigate(['/yDKXkjbhUFZYGEUdINOs/pages/inactive/users']);
       } else if (data == 'pendingKyc') {
-        this.router.navigate(['/UQZYyKXjbJhGPFSqSzkY/pages/pendingKyc/users']);
+        this.router.navigate(['/yDKXkjbhUFZYGEUdINOs/pages/pendingKyc/users']);
       }
       else {
-        this.router.navigate(['/UQZYyKXjbJhGPFSqSzkY/pages/users']);
+        this.router.navigate(['/yDKXkjbhUFZYGEUdINOs/pages/users']);
       }
     } else if (type == "deposit") {
       if (data == "pending") {
-        this.router.navigate(['/UQZYyKXjbJhGPFSqSzkY/pages/pending/deposit']);
+        this.router.navigate(['/yDKXkjbhUFZYGEUdINOs/pages/pending/deposit']);
       } else {
-        this.router.navigate(['/UQZYyKXjbJhGPFSqSzkY/pages/deposit']);
+        this.router.navigate(['/yDKXkjbhUFZYGEUdINOs/pages/deposit']);
       }
     }
     else if (type == "withdraw") {
       if (data == 'pending') {
-        this.router.navigate(['/UQZYyKXjbJhGPFSqSzkY/pages/pending/withdraw']);
+        this.router.navigate(['/yDKXkjbhUFZYGEUdINOs/pages/pending/withdraw']);
 
       }
       else {
-        this.router.navigate(['/UQZYyKXjbJhGPFSqSzkY/pages/withdraw']);
+        this.router.navigate(['/yDKXkjbhUFZYGEUdINOs/pages/withdraw']);
       }
     }
     else if (type == "orders") {
       if (data == 'active') {
-        this.router.navigate(['/UQZYyKXjbJhGPFSqSzkY/pages/active/orderhistory']);
+        this.router.navigate(['/yDKXkjbhUFZYGEUdINOs/pages/active/orderhistory']);
 
       }
       else {
-        this.router.navigate(['/UQZYyKXjbJhGPFSqSzkY/pages/orderhistory']);
+        this.router.navigate(['/yDKXkjbhUFZYGEUdINOs/pages/orderhistory']);
 
       }
 

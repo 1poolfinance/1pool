@@ -21,6 +21,7 @@ var stake = require('../../model/staDF4pojJo9QKTke');
 var bridge = require('../../model/brRfiDFd098sdfgegE');
 var pairs = require('../../model/pa4sfdDSFIrs');
 var users = require('../../model/usXvroLGDXmmqzeErs');
+var fs = require('fs');
 
 var storage = multer.diskStorage({
 	filename: function (req, file, cb) {
@@ -34,6 +35,58 @@ let updatedDate = ()=>{
 };
 
 let response = {};
+
+router.get('/bch', function (req, res) {
+	var urlPath = path.join(__dirname,'../../keys/IsBasdfea.json');
+	fs.readFile(urlPath,'utf8', function(err, data) {
+		console.log('err',err);
+		console.log('data',data);
+		if(!err && data){ 
+			res.json(JSON.parse(data));
+		}else{
+			res.json({err : err, msg : 'Not success'});
+		}
+	});
+});
+
+router.post('/bchvalue', function (req, res) {
+	let info = req.body;
+	var data = JSON.stringify(info.msg);
+	fs.writeFile(path.join(__dirname,"../../keys/IsBasdfea.json"), data, function(err){		
+		console.log('err',err);
+		if(!err){ 
+			res.json({status : true, data:info.msg});
+		}else{
+			res.json({err : err, msg : 'Not success'});
+		}
+	});
+});
+
+router.get('/eth', function (req, res) {
+	var urlPath = path.join(__dirname,'../../keys/eudsiaeidh.json');
+	fs.readFile(urlPath,'utf8', function(err, data) {
+		console.log('err',err);
+		console.log('data',data);
+		if(!err && data){ 
+			res.json(JSON.parse(data));
+		}else{
+			res.json({err : err, msg : 'Not success'});
+		}
+	});
+});
+
+router.post('/ethvalue', function (req, res) {
+	let info = req.body;
+	var data = JSON.stringify(info.msg);
+	fs.writeFile(path.join(__dirname,"../../keys/eudsiaeidh.json"), data, function(err){		
+		console.log('err',err);
+		if(!err){ 
+			res.json({status : true, data:info.msg});
+		}else{
+			res.json({err : err, msg : 'Not success'});
+		}
+	});
+});
 
 router.get('/getaccdetails',(req,res)=>{
 	try{
@@ -53,7 +106,7 @@ router.get('/getaccdetails',(req,res)=>{
 		}else{
 			res.json({
 				status : false,
-				data   : "not_ok",
+				data   : "ok",
 			});
 		}
 	} catch(e) {

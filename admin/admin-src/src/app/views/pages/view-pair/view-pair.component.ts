@@ -52,12 +52,12 @@ export class ViewPairComponent implements OnInit {
 					this.per = true; this.getId();
 				}else{
 					this.notifier.notify('error','Permission denied!')				
-					this.router.navigate(['/UQZYyKXjbJhGPFSqSzkY/pages/dashboard'])									
+					this.router.navigate(['/yDKXkjbhUFZYGEUdINOs/pages/dashboard'])									
 				}
 			}
 		}else {
 			this.notifier.notify('error','Permission denied!');
-			this.router.navigate(['/UQZYyKXjbJhGPFSqSzkY/pages/dashboard']);				
+			this.router.navigate(['/yDKXkjbhUFZYGEUdINOs/pages/dashboard']);				
 		} 
 	}); 
   }
@@ -86,7 +86,7 @@ export class ViewPairComponent implements OnInit {
 
 			} else {
 				this.notifier.notify('error', 'Invalid Request');
-				this.router.navigate(['/UQZYyKXjbJhGPFSqSzkY/pages/pairs']);
+				this.router.navigate(['/yDKXkjbhUFZYGEUdINOs/pages/pairs']);
 			}
 		});	
   }
@@ -98,7 +98,7 @@ export class ViewPairComponent implements OnInit {
       if (reqData.status == true) {
         this.actionType = 'all';
         this.notifier.notify('success', reqData.msg);
-        this.router.navigate(['/UQZYyKXjbJhGPFSqSzkY/pages/pairs']);        
+        this.router.navigate(['/yDKXkjbhUFZYGEUdINOs/pages/pairs']);        
       } else {
         this.notifier.notify('error', reqData.msg);      
       }

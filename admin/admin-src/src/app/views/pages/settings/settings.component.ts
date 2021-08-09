@@ -123,7 +123,7 @@ export class SettingsComponent implements OnInit {
 				this.passSubmitted = false;
 				localStorage.clear();
 				setTimeout(() => {
-					return  this.router.navigate(['/UQZYyKXjbJhGPFSqSzkY']);
+					return  this.router.navigate(['/yDKXkjbhUFZYGEUdINOs']);
 				}, 500);
 			} else {
 				this.notifier.notify('error', reqData.msg);

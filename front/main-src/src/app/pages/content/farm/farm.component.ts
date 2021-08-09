@@ -216,14 +216,14 @@ satkeAbi = [{"inputs":[{"internalType":"address","name":"_rewardToken","type":"a
             let token_reward = await _self.get_earned_rewards(res.result[i].contract_address,pabi,_self.account);
             let token_balance = await _self.lp_token_balance(res.result[i].address,lpAbi,_self.account);
             let lp_token_bal  =  await _self.dep_token_balance(res.result[i].poolid);
-            var upgra       = {poolid:res.result[i].poolid,symbol:res.result[i].symbol,address:res.result[i].address,balance:parseFloat(token_balance.balance).toFixed(8),depo_bal:parseFloat(lp_token_bal.balance).toFixed(8),earning:parseFloat(token_reward.balance).toFixed(8)};
+            var upgra       = {poolid:res.result[i].poolid,symbol:res.result[i].symbol,contract_address:res.result[i].contract_address,address:res.result[i].address,balance:(token_balance.balance >0)?token_balance.balance:"0",depo_bal:(lp_token_bal.balance > 0)?lp_token_bal.balance:"0",earning:(token_reward.balance > 0)?token_reward.balance:"0"};
          set_val_Upgrade.push(upgra);
             }
             else{
             let token_reward = await _self.get_earned_rewards_weth(res.result[i].contract_address,vaultabi,_self.account);
            let token_balance = await _self.lp_token_balance(res.result[i].address,lpAbi,_self.account);
            let lp_token_bal  =  await _self.dep_token_balance_weth(res.result[i].poolid);
-            var upgra       = {poolid:res.result[i].poolid,symbol:res.result[i].symbol,address:res.result[i].address,balance:parseFloat(token_balance.balance).toFixed(8),depo_bal:parseFloat(lp_token_bal.balance).toFixed(8),earning:parseFloat(token_reward.balance).toFixed(8)};
+            var upgra       = {poolid:res.result[i].poolid,symbol:res.result[i].symbol,address:res.result[i].address,contract_address:res.result[i].contract_address,balance:(token_balance.balance >0)?token_balance.balance:"0",depo_bal:(lp_token_bal.balance >0)?lp_token_bal.balance:"0",earning:(token_reward.balance > 0)?token_reward.balance:"0"  };
          set_val_Upgrade.push(upgra);
 
             }

@@ -9,6 +9,7 @@ import { VaultAbi } from '../../../files/vault_api';
 import { RewardPoolAbi_bnb } from '../../../files/reward_pool_api_bnb';
 import { LPAbi_bnb } from '../../../files/lp_abi_bnb';
 import { RewardFactoryAbi } from '../../../files/reward_factory_api';
+import { RewardFactoryAbi_bnb } from '../../../files/reward_factory_api_bnb';
 
 
 import { environment } from '../../../../environments/environment';
@@ -19,6 +20,7 @@ declare let window: any;
 let contract_details  = ContractDetails;
 let poolstakeabi      = PoolStakeAbi;
 let lpAbi_bnb             = LPAbi_bnb;
+let rewardfactoryAbi_bnb  = RewardFactoryAbi_bnb;
 let rewardfactoryAbi  = RewardFactoryAbi;
 let vaultabi  = VaultAbi;
 
@@ -29,9 +31,9 @@ let vaultabi  = VaultAbi;
 })
 export class StakeBnbComponent implements OnInit {
 dtOptions: any = {}; stakeHis:any; currentstakedata:any;stakepairHis = []; stakeLoader = false; metabalance : any; account = localStorage.getItem('account_bnb'); token = localStorage.getItem('1pool-Token_bnb');
-currency_select:any="";
+currency_select:any="";rewrd_btn:any=true;
 
-contractAdd = '0x47adbab56a1600cf74cdfeb95a2276e381e4eb27';
+contractAdd = '';
   constructor(public toastr: ToastrManager,private router : Router,private conn: ConnectionService) { }
   ngOnInit() {
 
@@ -75,6 +77,7 @@ contractAdd = '0x47adbab56a1600cf74cdfeb95a2276e381e4eb27';
   stakebutton_show  = true;
   show_unstake_section  = false;
   async stakepair_select(e){
+    this.rewrd_btn       = false;
     this.deposit_amount       = 0;
     this.available_lp_amount  = 0;
       let self = this;
@@ -84,7 +87,7 @@ contractAdd = '0x47adbab56a1600cf74cdfeb95a2276e381e4eb27';
       window.web3 = new window.Web3(window.BinanceChain);
       let rpcontract        = new window.web3.eth.Contract(abi, cont_addr);
      
-      if(this.currentstakedata != "30") {
+      if(this.currentstakedata != "30" && this.currentstakedata != "31") {
       await rpcontract.methods.poolInfo(this.currentstakedata).call(async(err,poolInforesult) =>{
       
         if(poolInforesult){
@@ -119,7 +122,7 @@ contractAdd = '0x47adbab56a1600cf74cdfeb95a2276e381e4eb27';
     else{
 
       
-       let lp_contract           = "0xa65351da66f81b822caaef67340b7e1b300a42d8";
+       let lp_contract           = contract_details.onepool_bnb;
 
           await this.lp_token_balance(lp_contract,lpAbi_bnb,this.account).then(async function (retAccount: any) {
               if(retAccount.status) {
@@ -134,11 +137,11 @@ contractAdd = '0x47adbab56a1600cf74cdfeb95a2276e381e4eb27';
               alert("Something went to wrong. Please try again later.")
             });
             
-        let rfcontract_new            = new window.web3.eth.Contract(vaultabi, "0x6Fddb67E4300d50b5F4BA47134C01930b221C31D");
+        let rfcontract_new            = new window.web3.eth.Contract(lpAbi_bnb, contract_details.onepool_staking_bnb);
         
-         await rfcontract_new.methods.userInfo(this.account).call(async(err,userInforesult) =>{
+         await rfcontract_new.methods.balanceOf(this.account).call(async(err,userInforesult) =>{
             if(userInforesult){
-              this.deposit_amount   = await window.web3.utils.fromWei(userInforesult.amount.toString(), 'ether');
+              this.deposit_amount   = await window.web3.utils.fromWei(userInforesult.toString(), 'ether');
               if(userInforesult.amount > 0){
                 this.show_unstake_section = true;
               }
@@ -165,7 +168,7 @@ contractAdd = '0x47adbab56a1600cf74cdfeb95a2276e381e4eb27';
     let cont_addr       = contract_details.reward_pool_contract_bnb;
     let abi             = RewardPoolAbi_bnb;
     let rpcontract      = new window.web3.eth.Contract(abi, cont_addr);
-      if(this.currentstakedata != "30")
+      if(this.currentstakedata != "30" && this.currentstakedata != "31")
       {
     await rpcontract.methods.poolInfo(this.currentstakedata).call(async(err,result) =>{
       if(result){  
@@ -255,13 +258,11 @@ contractAdd = '0x47adbab56a1600cf74cdfeb95a2276e381e4eb27';
   }
   else{
         
-         var currency_select = "WBNB";
-        let lp_contract           = "0xa65351da66f81b822caaef67340b7e1b300a42d8";
-        let reawardFactory        = "0x6Fddb67E4300d50b5F4BA47134C01930b221C31D";
+         var currency_select = "1POOL-Bep";
+        let lp_contract           = contract_details.onepool_bnb;
+        let reawardFactory        = contract_details.onepool_staking_bnb;
         let _self = this;
-        
             await this.lp_token_balance(lp_contract,lpAbi_bnb,this.account).then(async function (retAccount: any) {
-
               if(retAccount.rawbalance<amount) {
                 
                 _self.toastr.errorToastr('Insufficiant Balance','Error');
@@ -282,18 +283,18 @@ contractAdd = '0x47adbab56a1600cf74cdfeb95a2276e381e4eb27';
                           _self.conn.clearbackground();
                           let obj = {
                             "amount" :postData.amount,
-                            "poolid" :30,
+                            "poolid" :31,
                             "useraddress" :_self.account.toString(),
                             "txid" :retdeposit.txid.transactionHash,
                             "types" :"Deposit",
                             "currency" :currency_select,
                             "currency_type" :"BNB",
                           } 
-
                           
                          
                           _self.conn.postRequest('users/stake',obj, _self.token).subscribe((res:any) => {
                             if(res.status == 1){
+                              stake.resetForm();
                               _self.toastr.successToastr(res.msg,'success');
                               _self.router.navigate(['/stake-bnb']);
                               _self.stakehis();
@@ -330,7 +331,6 @@ contractAdd = '0x47adbab56a1600cf74cdfeb95a2276e381e4eb27';
       
 
   }
-
     return;
     this.conn.postRequest('users/stake',postData, this.token).subscribe((res:any) => {
       if(res.status == 1){
@@ -381,7 +381,336 @@ contractAdd = '0x47adbab56a1600cf74cdfeb95a2276e381e4eb27';
   }
   }
 
+
+  async reward()
+  {
+    let _self = this;
+    let depo_ball = _self.available_lp_amount;
+    let poolid = _self.currentstakedata;
+    if(depo_ball > 0)
+    {
+     if(poolid != "30" && poolid != "31") {
+
+    this.conn.changebackground();
+    let amount          = 0;
+    let cont_addr       = contract_details.reward_pool_contract_bnb;
+    let abi             = RewardPoolAbi_bnb;
+    window.web3 = new window.Web3(window.BinanceChain);
+    let rpcontract      = new window.web3.eth.Contract(abi, cont_addr);
+    await rpcontract.methods.poolInfo(poolid).call(async(err,result) =>{
+
+      if(result){  
+              
+        this.cur_stack_pool_info  = result;
+        let lp_contract           = this.cur_stack_pool_info.lpToken;
+        let reawardFactory        = this.cur_stack_pool_info.reawardFactory;
+            await this.lp_token_balance(lp_contract,lpAbi_bnb,this.account).then(async function (retAccount: any) {
+              if(retAccount.rawbalance<amount) {
+                _self.toastr.errorToastr('Insufficiant Balance','Error');
+                _self.conn.clearbackground();
+              } else {
+                  let approve_contract  = lp_contract;
+                  let approve_abi       = lpAbi_bnb;
+                  let approve_spender   = reawardFactory;
+                  await _self.approvecall(approve_contract,approve_abi,approve_spender,amount).then(async function (retApprove: any) {
+                    if(retApprove.status) {
+                      let factory_contract  = reawardFactory;
+                      let factory_abi       = rewardfactoryAbi_bnb;
+                      await _self.depositcall(factory_contract,factory_abi,amount).then(async function (retdeposit: any) {
+                        if(retApprove.status) {
+                          let obj = {
+                            "amount" :0,
+                            "poolid" :0,
+                            "useraddress" :_self.account.toString(),
+                            "txid" :retdeposit.txid.transactionHash,
+                            "types" :"Earn",
+                            "currency" :"OP",
+                            "currency_type" :"BNB",
+                          } 
+                         
+                          _self.conn.postRequest('users/stake',obj, _self.token).subscribe((res:any) => {
+                            if(res.status == 1){
+                              _self.toastr.successToastr("Successfully earned",'success');
+                              _self.conn.clearbackground();
+                              _self.router.navigate(['/farm-bnb']);
+                              _self.stakehis();
+                            }else{
+                              _self.toastr.errorToastr(res.msg,'Error');
+                            }
+                          });
+                           
+                           _self.stakepairhis();
+                        } else {
+                          _self.toastr.errorToastr(retApprove.message,'Error');
+                          _self.conn.clearbackground();
+                        }
+                      }).catch(function (error) {
+                        _self.toastr.errorToastr('Something went to wrong. Please try again later1.','Error');
+                        _self.conn.clearbackground();
+                      });
+                    } else {
+                       _self.toastr.errorToastr(retApprove.message,'Error');
+                      _self.conn.clearbackground();
+                    }
+                  }).catch(function (error) {
+                    _self.toastr.errorToastr('Something went to wrong. Please try again later2.','Error');
+                    _self.conn.clearbackground();
+                  });
+
+              }
+            }).catch(function (error) {
+              _self.toastr.errorToastr('Something went to wrong. Please try again later3.','Error');
+              _self.conn.clearbackground();
+            });
+      }else{
+
+      }
+    });
+
+    return;
+  }
+  else{
+
+    this.conn.changebackground();
+    let amount          = 0;
+    let cont_addr       = contract_details.onepool_staking_bnb;
+    let abi             = vaultabi;
+    let rpcontract      = new window.web3.eth.Contract(abi, cont_addr);
+
+              
+        let lp_contract           = contract_details.onepool_bnb;
+        let reawardFactory        = contract_details.onepool_staking_bnb;
+       
+            await this.lp_token_balance(lp_contract,lpAbi_bnb,this.account).then(async function (retAccount: any) {
+              if(retAccount.rawbalance<amount) {
+                _self.toastr.errorToastr('Insufficiant Balance','Error');
+                _self.conn.clearbackground();
+              } else {
+                  let approve_contract  = lp_contract;
+                  let approve_abi       = lpAbi_bnb;
+                  let approve_spender   = reawardFactory;
+                  await _self.approvecall(approve_contract,approve_abi,approve_spender,amount).then(async function (retApprove: any) {
+                    if(retApprove.status) {
+                      let factory_contract  = reawardFactory;
+                      let factory_abi       = vaultabi;
+                      
+                      await _self.depositcall(factory_contract,factory_abi,amount).then(async function (retdeposit: any) {
+                        if(retApprove.status) {
+                          let obj = {
+                            "amount" :0,
+                            "poolid" :31,
+                            "useraddress" :_self.account.toString(),
+                            "txid" :retdeposit.txid.transactionHash,
+                            "types" :"Earn",
+                            "currency" :"OP",
+                            "currency_type" :"BNB",
+                          } 
+                         
+                          _self.conn.postRequest('users/stake',obj, _self.token).subscribe((res:any) => {
+                            if(res.status == 1){
+                              _self.toastr.successToastr("Successfully earned",'success');
+                              _self.conn.clearbackground();
+                              _self.router.navigate(['/farm-bnb']);
+                              _self.stakehis();
+                            }else{
+                              _self.toastr.errorToastr(res.msg,'Error');
+                            }
+                          });
+                           
+                           _self.stakepairhis();
+                        } else {
+                          _self.toastr.errorToastr(retApprove.message,'Error');
+                          _self.conn.clearbackground();
+                        }
+                      }).catch(function (error) {
+                        _self.toastr.errorToastr('Something went to wrong. Please try again later.','Error');
+                        _self.conn.clearbackground();
+                      });
+                    } else {
+                       _self.toastr.errorToastr(retApprove.message,'Error');
+                      _self.conn.clearbackground();
+                    }
+                  }).catch(function (error) {
+                    _self.toastr.errorToastr('Something went to wrong. Please try again later.','Error');
+                    _self.conn.clearbackground();
+                  });
+
+              }
+            }).catch(function (error) {
+              _self.toastr.errorToastr('Something went to wrong. Please try again later.','Error');
+              _self.conn.clearbackground();
+            });
+      
+
+    return;
+  }
+
+}
+else
+{
+  _self.toastr.errorToastr("Insufficiant balance",'Error');
+}
+  
+  }
+
+
   async unstakeFun(stake: NgForm){
+    this.conn.changebackground();
+    let postData        = stake.value;
+
+
+    if(postData.amount > 0) {
+    if(postData.currency != "30" && postData.currency != "31") {
+    let amount          = await window.web3.utils.toWei(postData.amount.toString(), 'ether');
+    let cont_addr       = contract_details.reward_pool_contract_bnb;
+    let abi             = RewardPoolAbi_bnb
+    let rpcontract      = new window.web3.eth.Contract(abi, cont_addr);
+    await rpcontract.methods.poolInfo(postData.currency).call(async(err,result) =>{
+
+          if(this.currentstakedata == 0)
+          var currency_select = "onePool-cake";
+          else if(this.currentstakedata == 1)
+          var currency_select = "onePool-BNB";
+          else
+          var currency_select = "onepool-USD";
+
+
+      if(result) {
+        this.cur_stack_pool_info  = result;
+        let lp_contract           = this.cur_stack_pool_info.lpToken;
+        let reawardFactory        = this.cur_stack_pool_info.reawardFactory;
+        let _self = this;
+      
+          let rfcontract            = new window.web3.eth.Contract(rewardfactoryAbi_bnb, reawardFactory);
+          await rfcontract.methods.userInfo(this.account).call(async(err,userInforesult) =>{
+            if(userInforesult){
+              this.deposit_amount   = await window.web3.utils.fromWei(userInforesult.amount.toString(), 'ether');
+              if(userInforesult.amount < +amount){
+                _self.toastr.errorToastr('Insufficiant Balance','Error');
+                _self.conn.clearbackground();
+              }else{
+                let factory_contract  = reawardFactory;
+                let factory_abi       = rewardfactoryAbi_bnb;
+                await _self.withdrawcall(factory_contract,factory_abi,amount).then(async function (retWithdraw: any) {
+                  if(retWithdraw.status) {
+                    
+                    _self.toastr.successToastr(retWithdraw.message,'success');
+                    _self.conn.clearbackground();
+                    let obj = {
+                    "amount" :postData.amount,
+                    "poolid" :postData.currency,
+                    "useraddress" :_self.account.toString(),
+                    "txid" :retWithdraw.txid.transactionHash,
+                    "types" :"Withdraw",
+                    "currency" :currency_select,
+                    "currency_type" :"BNB",
+                    } 
+                    _self.conn.postRequest('users/stake',obj, _self.token).subscribe((res:any) => {
+                    if(res.status == 1){
+                    _self.router.navigate(['/stake']);
+                    _self.stakehis();
+                    }else{
+                    _self.toastr.errorToastr(res.msg,'Error');
+                    }
+                    });
+                    _self.stakepairhis();
+
+                  } else {
+                    _self.toastr.errorToastr(retWithdraw.message,'Error');
+                    _self.conn.clearbackground();
+                  }
+                }).catch(function (error) {
+                  _self.toastr.errorToastr(error.message,'Error');
+                  _self.conn.clearbackground();
+                });
+              }
+            }
+          });
+      } else {
+
+      }
+    });
+
+    return;
+
+
+
+  }
+  else {
+
+    let amount          = await window.web3.utils.toWei(postData.amount.toString(), 'ether');
+    let cont_addr       = contract_details.reward_pool_contract_bnb;
+    let abi             = RewardPoolAbi_bnb
+  
+
+          var currency_select = "1POOL-Bep";
+
+
+        let lp_contract           = contract_details.onepool_bnb;
+        let reawardFactory        = contract_details.onepool_staking_bnb;
+        let _self = this;
+          let rfcontract            = new window.web3.eth.Contract(lpAbi_bnb, reawardFactory);
+          await rfcontract.methods.userInfo(this.account).call(async(err,userInforesult) =>{
+            if(userInforesult){
+              this.deposit_amount   = await window.web3.utils.fromWei(userInforesult.toString(), 'ether');
+              if(userInforesult.amount < +amount){
+                _self.toastr.errorToastr('Insufficiant Balance','Error');
+                _self.conn.clearbackground();
+              }else{
+                let factory_contract  = reawardFactory;
+                let factory_abi       = vaultabi;
+                await _self.withdrawcall(factory_contract,vaultabi,amount).then(async function (retWithdraw: any) {
+                  if(retWithdraw.status) {
+                    
+                    _self.toastr.successToastr(retWithdraw.message,'success');
+                    _self.conn.clearbackground();
+                    let obj = {
+                    "amount" :postData.amount,
+                    "poolid" :postData.currency,
+                    "useraddress" :_self.account.toString(),
+                    "txid" :retWithdraw.txid.transactionHash,
+                    "types" :"Withdraw",
+                    "currency" :currency_select,
+                    "currency_type" :"BNB",
+                    } 
+                    _self.conn.postRequest('users/stake',obj, _self.token).subscribe((res:any) => {
+                    if(res.status == 1){
+                    _self.router.navigate(['/stake']);
+                    _self.stakehis();
+                    }else{
+                    _self.toastr.errorToastr(res.msg,'Error');
+                    }
+                    });
+                    _self.stakepairhis();
+
+                  } else {
+                    _self.toastr.errorToastr(retWithdraw.message,'Error');
+                    _self.conn.clearbackground();
+                  }
+                }).catch(function (error) {
+                  _self.toastr.errorToastr(error.message,'Error');
+                  _self.conn.clearbackground();
+                });
+              }
+            }
+          });
+      
+
+    return;
+
+    
+
+  
+
+  }
+  
+  }
+  else{
+    this.conn.clearbackground();
+    this.toastr.errorToastr("Please enter valid number",'Error');
+  }
+  }
+  async unstakeFun_old(stake: NgForm){
     this.conn.changebackground();
     let postData        = stake.value;
     let amount          = await window.web3.utils.toWei(postData.amount.toString(), 'ether');

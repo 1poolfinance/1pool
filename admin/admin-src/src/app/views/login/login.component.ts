@@ -105,7 +105,7 @@ export class LoginComponent implements OnInit {
 				this.notifier.notify( 'error', resData.error);
 				if(resData.status == 401)
 				{
-					this.router.navigate(['/UQZYyKXjbJhGPFSqSzkY']);
+					this.router.navigate(['/yDKXkjbhUFZYGEUdINOs']);
 				}
 			}
 

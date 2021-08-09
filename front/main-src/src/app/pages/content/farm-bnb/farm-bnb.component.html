@@ -9,9 +9,9 @@
 					</span>
 				</span>
 			</h1>
-			<div class="bannerLabel md pt-2">
+			<!-- <div class="bannerLabel md pt-2">
 				<span> It ain't much, but it's honest work. </span>
-			</div>
+			</div> -->
 		</div>
 	</div>	
 	<div class="farmStatus">
@@ -20,7 +20,7 @@
 				<div class="col-sm-12 col-md-6 col-lg-4 farmStatusCol">
 					<div class="d-flex flex-column justify-content-between farmStatusContent">
 						<div class="fsPoint">
-							<span class="fsPoint_label"> Deposits in Harvest : </span>
+							<span class="fsPoint_label"> Deposits in 1POOL : </span>
 							<span class="fsPoint_value fMd d-inline-block w-100"> {{deposit_harv |number:'1.2'}} USD </span>
 						</div>
 					</div>
@@ -40,11 +40,11 @@
 				<div class="col-sm-12 col-md-6 col-lg-4 farmStatusCol">
 					<div class="farmStatusContent">
 						<div class="fsPoint">
-							<span class="fsPoint_label"> UNI-V2 price : </span>
+							<span class="fsPoint_label"> 1POOL price : </span>
 							<span class="fsPoint_value"> {{uni_usd}} USD </span>
 						</div>
 						<div class="fsPoint">
-							<span class="fsPoint_label"> UNI-V2 staked : </span>
+							<span class="fsPoint_label"> 1POOL Staked % : </span>
 							<span class="fsPoint_value"> {{uni_perc | number:'1.2'}} % </span>
 						</div>
 					</div>
@@ -84,7 +84,7 @@
 					<thead>
 						<tr>
 							<th>Asset</th>
-							<th>Harvest APY</th>
+							<th>1POOL APY</th>
 							<th> Deposits</th>
 							<th> Your LP Tokens</th>
 						</tr>
@@ -109,7 +109,9 @@
 											</div>
 											<input name="poolid" type="hidden" [ngModel]=pair.poolid> 
 											<div class="col-sm-6 col-md-6 col-lg-3 tdAcc_depCol">
-												
+												<div class="tdAcc_depBtn">
+													<button type="submit" [disabled]="stake.invalid && stakebutton_show" (click)="stakeFun(stake)" class="btn btnGn"> Deposit </button>
+												</div>
 											</div>
 											
 										</div>
@@ -144,7 +146,14 @@
 											</div>
 											<div class="col-sm-6 col-md-6 col-lg-3 col-xl-2 tdAcc_depCol">
 												<div class="tdAcc_depBtn">
-													<ng-template #popTemplate><div [innerHtml]="popupcont"></div></ng-template>
+													<ng-template #popTemplate><div class="popupcontent">
+<div class="poplist"><span>Asset: </span><span><b>{{pair.symbol}}</b></span></div>
+<div class="poplist"><span>Vault address: </span><span><b><a target="_blank" href="https://bscscan.com/address/{{pair.address}}">{{pair.address.substr(0,6)}}.. {{pair.address.substr(38,42)}}<i class="fas fa-external-link-alt"></i></a></b></span></div>
+<div class="poplist"><span>Pool address: </span><span><b><a target="_blank" href="https://bscscan.com/address/{{pair.contract_address}}">{{pair.contract_address.substr(0,6)}}..{{pair.contract_address.substr(38,42)}} <i class="fas fa-external-link-alt"></i></a></b></span></div>
+<div class="poplist3"><span><b>Claim rewards:</b></span></div>
+<div><ol class="numeric-list"><li>Hit "Claim rewards" to claim your <b>FARM</b></li>
+<li>To earn additional interest on your <b>FARM</b>, stake your claimed <b>FARM</b> into the <b>FARM</b> pool. We recommend claiming and re-staking your <b>FARM</b> rewards into the <b>FARM</b> pool periodically (for example, weekly)</li></ol></div>
+</div></ng-template>
 								<button class="btn btn-none" [popover]="popTemplate" triggers="mouseenter" containerClass="mypopover"> 
 									<span class="btnText"> Vault rewards </span>
 									<i class="fas fa-arrow-right"></i>

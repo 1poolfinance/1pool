@@ -49,6 +49,9 @@ transit_btn:any=false;
 
 
   ngOnInit() {
+    const body = document.getElementsByTagName('body')[0];
+      body.classList.remove('forOverlayBottom');
+      
     if(!this.account){
       this.toastr.errorToastr('Connect your wallet','Error');
       this.router.navigate(['/']);

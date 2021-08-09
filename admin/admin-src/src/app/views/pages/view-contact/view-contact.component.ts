@@ -37,12 +37,12 @@ export class ViewContactComponent implements OnInit {
 					this.per = true; this.getId();
 				}else{
 					this.notifier.notify('error','Permission denied!')				
-					this.router.navigate(['/UQZYyKXjbJhGPFSqSzkY/pages/dashboard'])									
+					this.router.navigate(['/yDKXkjbhUFZYGEUdINOs/pages/dashboard'])									
 				}
 			}
 		}else {
 			this.notifier.notify('error','Permission denied!');
-			this.router.navigate(['/UQZYyKXjbJhGPFSqSzkY/pages/dashboard']);				
+			this.router.navigate(['/yDKXkjbhUFZYGEUdINOs/pages/dashboard']);				
 		} 
 	});
   }
@@ -62,12 +62,12 @@ export class ViewContactComponent implements OnInit {
 
 				} else {
 					this.notifier.notify('error', res.msg);
-					this.router.navigate(['/UQZYyKXjbJhGPFSqSzkY/pages/dashboard']);
+					this.router.navigate(['/yDKXkjbhUFZYGEUdINOs/pages/dashboard']);
 				}
 			})
 		} else {
 			this.notifier.notify('error', 'Invalid Request');
-			this.router.navigate(['/UQZYyKXjbJhGPFSqSzkY/pages/dashboard']);
+			this.router.navigate(['/yDKXkjbhUFZYGEUdINOs/pages/dashboard']);
 		}
 	});	
 }
@@ -85,7 +85,7 @@ export class ViewContactComponent implements OnInit {
 			if(reqData.status == true) {				
 				this.actionType = 'all';
 				this.notifier.notify( 'success', reqData.msg);
-				this.router.navigate(['/UQZYyKXjbJhGPFSqSzkY/pages/contactus']);						
+				this.router.navigate(['/yDKXkjbhUFZYGEUdINOs/pages/contactus']);						
 			} else {
 				this.notifier.notify( 'error', reqData.msg);
 			}

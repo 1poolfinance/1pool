@@ -268,7 +268,7 @@ router.post('/getxid',common.userVerify,(req,res) => {
 
 router.get('/pairHis',common.userVerify,(req,res) => {
 	try{
-		pairs.find({currency_type : 'ETH'}).exec(function(countErr, countRes) {
+		pairs.find({currency_type : 'ETH', status: 1}).exec(function(countErr, countRes) {
 	 	 	if(countRes){
 				res.json({'status' : 1, 'result':countRes});
 			}else{
@@ -282,7 +282,7 @@ router.get('/pairHis',common.userVerify,(req,res) => {
 
 router.get('/pairHis_bnb',common.userVerify,(req,res) => {
 	try{
-		pairs.find({currency_type : 'BNB'}).exec(function(countErr, countRes) {
+		pairs.find({currency_type : 'BNB', status: 1}).exec(function(countErr, countRes) {
 	 	 	if(countRes){
 				res.json({'status' : 1, 'result':countRes});
 			}else{

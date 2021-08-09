@@ -33,55 +33,55 @@ export interface NavData {
 let Data = [
   {
     name: 'Dashboard',
-    url: '/UQZYyKXjbJhGPFSqSzkY/pages/dashboard',
+    url: '/yDKXkjbhUFZYGEUdINOs/pages/dashboard',
     icon: 'icon-speedometer'
   },
   {
     module: 'Log History',
     name: 'Log History',
-    url: '/UQZYyKXjbJhGPFSqSzkY/pages/loghistory',
+    url: '/yDKXkjbhUFZYGEUdINOs/pages/loghistory',
     icon: 'fa fa-file-text'
   },
   {
     module: 'Pairs',
     name: 'Pairs',
-    url: '/UQZYyKXjbJhGPFSqSzkY/pages/pairs',
+    url: '/yDKXkjbhUFZYGEUdINOs/pages/pairs',
     icon: 'fa fa-exchange'
   },
   {
     module: 'Manage CMS',
     name: 'CMS',
-    url: '/UQZYyKXjbJhGPFSqSzkY/pages/cms',
+    url: '/yDKXkjbhUFZYGEUdINOs/pages/cms',
     icon: 'fa fa-file-text'
   },
   {
     module: 'Manage FAQ',
     name: 'FAQ',
-    url: '/UQZYyKXjbJhGPFSqSzkY/pages/faq',
+    url: '/yDKXkjbhUFZYGEUdINOs/pages/faq',
     icon: 'fa fa-question-circle'
   },  
   {
     module: 'Bridge History',
     name: 'Bridge History',
-    url: '/UQZYyKXjbJhGPFSqSzkY/pages/bridge-list',
+    url: '/yDKXkjbhUFZYGEUdINOs/pages/bridge-list',
     icon: 'fa fa-history'
   },
   {
     module: 'Stake History',
     name: 'Stake History',
-    url: '/UQZYyKXjbJhGPFSqSzkY/pages/stake-list',
+    url: '/yDKXkjbhUFZYGEUdINOs/pages/stake-list',
     icon: 'fa fa-history'
   },
    {
     module:'Manage Site Settings',
     name: 'Site Settings',
-    url: '/UQZYyKXjbJhGPFSqSzkY/pages/sitesettings',
+    url: '/yDKXkjbhUFZYGEUdINOs/pages/sitesettings',
     icon: 'icon-settings'
   },
   {
     module: 'Manage IP',
     name: 'Block IP',
-    url: '/UQZYyKXjbJhGPFSqSzkY/pages/blockip',
+    url: '/yDKXkjbhUFZYGEUdINOs/pages/blockip',
     icon: 'fa fa-ban'
   }
 ];

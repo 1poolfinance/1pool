@@ -53,12 +53,12 @@ export class ContactusComponent implements OnInit {
 					this.per = true;
 				}else{
 					this.notifier.notify('error','Permission denied!')				
-					this.route.navigate(['/UQZYyKXjbJhGPFSqSzkY/pages/dashboard'])									
+					this.route.navigate(['/yDKXkjbhUFZYGEUdINOs/pages/dashboard'])									
 				}
 			}
 		}else {
 			this.notifier.notify('error','Permission denied!');
-			this.route.navigate(['/UQZYyKXjbJhGPFSqSzkY/pages/dashboard']);				
+			this.route.navigate(['/yDKXkjbhUFZYGEUdINOs/pages/dashboard']);				
 		} 
 	});
 	}

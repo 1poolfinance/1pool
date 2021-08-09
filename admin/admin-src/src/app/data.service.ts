@@ -96,7 +96,7 @@ export class DataService {
   }
 
   adminUrl(){
-    return '/UQZYyKXjbJhGPFSqSzkY/';
+    return '/yDKXkjbhUFZYGEUdINOs/';
   }
 
   geteditorconfig() {
@@ -139,7 +139,7 @@ export class DataService {
 
     function yourFunction() {
           localStorage.clear();
-          window.location.href = '/#/UQZYyKXjbJhGPFSqSzkY';  
+          window.location.href = '/#/yDKXkjbhUFZYGEUdINOs';  
     }
 
     function resetTimer() {

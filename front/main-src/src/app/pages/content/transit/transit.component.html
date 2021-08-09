@@ -22,7 +22,7 @@
 
                             <select (change)="change_fun($event)" class="form-control border-right-0" id="currency" name="currency" required>
                                    <option disabled value="">Select Currency</option>
-                                   <option value="ETH1pool">ETH 1pool</option>
+                                   <option value="ERC201pool">1pool ERC20</option>
                                 </select>
                         </div>
                     </div>
@@ -87,7 +87,7 @@
                     <td>{{stake.date | date: 'yyyy-MM-dd h:mm:ss'}}</td>
                     <td>{{stake.currency}}</td>
                     <td>{{stake.amount}}</td>
-                    <td title="{{stake.txnid}}"><a target="_blank" href="https://testnet.bscscan.com/tx/{{stake.transactionid}}" style="display: inline-block;width: 180px;white-space: nowrap;overflow: hidden !important; text-overflow: ellipsis;">{{stake.transactionid}}</a></td>
+                    <td title="{{stake.txnid}}"><a target="_blank" href="https://bscscan.com/tx/{{stake.transactionid}}" style="display: inline-block;width: 180px;white-space: nowrap;overflow: hidden !important; text-overflow: ellipsis;">{{stake.transactionid}}</a></td>
                     <td class="grn_text">{{stake.status}}</td>
                 </tr>
             </tbody>

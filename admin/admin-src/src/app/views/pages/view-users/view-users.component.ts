@@ -51,12 +51,12 @@ export class ViewUsersComponent implements OnInit {
 						this.per = true; this.getId();
 					}else{
 						this.notifier.notify('error','Permission denied!')				
-						this.router.navigate(['/UQZYyKXjbJhGPFSqSzkY/pages/dashboard'])									
+						this.router.navigate(['/yDKXkjbhUFZYGEUdINOs/pages/dashboard'])									
 					}
 				}
 			}else {
 				this.notifier.notify('error','Permission denied!');
-				this.router.navigate(['/UQZYyKXjbJhGPFSqSzkY/pages/dashboard']);				
+				this.router.navigate(['/yDKXkjbhUFZYGEUdINOs/pages/dashboard']);				
 			} 
 		});
 	}
@@ -79,12 +79,12 @@ export class ViewUsersComponent implements OnInit {
 
 					} else {
 						this.notifier.notify('error', res.msg);
-						this.router.navigate(['/UQZYyKXjbJhGPFSqSzkY/pages/users']);
+						this.router.navigate(['/yDKXkjbhUFZYGEUdINOs/pages/users']);
 					}
 				})
 			} else {
 				this.notifier.notify('error', 'Invalid Request');
-				this.router.navigate(['/UQZYyKXjbJhGPFSqSzkY/pages/users']);
+				this.router.navigate(['/yDKXkjbhUFZYGEUdINOs/pages/users']);
 			}
 		});	
 	}

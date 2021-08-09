@@ -42,7 +42,7 @@
 							Disconnect your wallet {{(account) ? '(ETH)' : '(BNB)'}}
 						</span>	
 					</button>
-					<a href="https://ropsten.etherscan.io/address/0x47adbab56a1600cf74cdfeb95a2276e381e4eb27" target="_blank" class="btn btn-primary btnLg py-3 ml-3 addressbtn"><span class="align-middle">Contract : 0x47adbab5... </span></a>
+					<a href="https://etherscan.io/address/0xa57EE92EFB9464768b7683A6B9fcDc102a255994" target="_blank" class="btn btn-primary btnLg py-3 ml-3 addressbtn"><span class="align-middle">Contract : 0xa57EE92E... </span></a>
 				</ul>
 			</div>
 		</nav>	
@@ -54,19 +54,19 @@
 	  <div class="modal-dialog modal-lg modal-dialog-centered">
 	    <div class="modal-content">
 	      <div class="modal-header">
-	        <h4 id="dialog-static-name" class="modal-title color-gradient"><span class="">Welcome to 1Pool Harvest Login</span></h4>
+	        <h4 id="dialog-static-name" class="modal-title color-gradient"><span class="">Welcome to 1Pool Finance Login</span></h4>
 	        <button type="button" class="close pull-right" aria-label="Close" (click)="staticModal.hide()">
 	          <span aria-hidden="true">&times;</span>
 	        </button>
 	      </div>
 	     	<div class="modal-body">			
-				<div class="walletLoginBtns text-center">
+				<div class="walletLoginBtns text-center" (click)="walletoptions('ETH')">
 					<button class="d-inline-flex flex-wrap align-items-center justify-content-between btn wl_Btns">
 						<div class="wl_Btn_left">
 							<span class="align-middle wl_Btn_icon">
 								<img src="assets/images/icons/meta-mask.png" alt="meta-mask" />
 							</span>
-							<span class="align-middle wl_Btn_text" (click)="walletoptions('ETH')">
+							<span class="align-middle wl_Btn_text">
 								Meta Mask
 							</span>
 						</div>
@@ -78,13 +78,13 @@
 						</div>
 					</button>
 				</div>
-				<div class="walletLoginBtns text-center">
+				<div class="walletLoginBtns text-center" (click)="walletoptions('BNB')">
 					<button class="d-inline-flex flex-wrap align-items-center justify-content-between btn wl_Btns">
 						<div class="wl_Btn_left">
 							<span class="align-middle wl_Btn_icon">
 								<img src="assets/images/icons/binance-smart-chain.png" alt="meta-mask" />
 							</span>
-							<span class="align-middle wl_Btn_text" (click)="walletoptions('BNB')">
+							<span class="align-middle wl_Btn_text">
 								Binance Chain Wallet
 							</span>
 						</div>

@@ -2,7 +2,7 @@
 
 export const environment = {
   production: false,
-  chainid : 3,
+  chainid : 1,
   explorer : ""
 };
 

@@ -58,12 +58,12 @@ export class LogattemptsComponent implements OnInit {
 					this.per = true;
 				}else{
 					this.notifier.notify('error','Permission denied!')				
-					this.router.navigate(['/UQZYyKXjbJhGPFSqSzkY/pages/dashboard'])									
+					this.router.navigate(['/yDKXkjbhUFZYGEUdINOs/pages/dashboard'])									
 				}
 			}
 		}else {
 			this.notifier.notify('error','Permission denied!');
-			this.router.navigate(['/UQZYyKXjbJhGPFSqSzkY/pages/dashboard']);				
+			this.router.navigate(['/yDKXkjbhUFZYGEUdINOs/pages/dashboard']);				
 		} 
 	});
 	}

@@ -14,6 +14,8 @@ let settingSchema = new Schema({
   "twitter"      : {type: String, default: 'http://www.twitter.com'},
   "linkedin"     : {type: String, default: 'http://www.demo.com'},
   "telegram"     : {type: String, default: 'https://www.web.telegram.org'},  
+  "reddit"       : {type: String, default: 'https://www.reddit.com'},  
+  "medium"       : {type: String, default: 'https://medium.com/'},  
   "ethblock"     : {type: Number, default:0},
   "bnbblock"     : {type: Number, default:0},
   "xlm_lastToken": {type: Number, default:0},

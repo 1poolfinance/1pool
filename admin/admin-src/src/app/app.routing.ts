@@ -21,8 +21,8 @@ export const routes: Routes = [
     canActivate: [AuthGuardGuard]
   },
   {
-    path: 'UQZYyKXjbJhGPFSqSzkY/pages',
-    redirectTo: 'UQZYyKXjbJhGPFSqSzkY/pages/dashboard',
+    path: 'yDKXkjbhUFZYGEUdINOs/pages',
+    redirectTo: 'yDKXkjbhUFZYGEUdINOs/pages/dashboard',
     pathMatch: 'full',
     canActivate: [AuthGuardGuard],
   },
@@ -47,7 +47,7 @@ export const routes: Routes = [
     }
   },
   {
-    path: 'UQZYyKXjbJhGPFSqSzkY',
+    path: 'yDKXkjbhUFZYGEUdINOs',
     component: LoginComponent,
     data: {
       title: 'Login Page'
@@ -68,7 +68,7 @@ export const routes: Routes = [
     }
   },
   {
-    path: 'UQZYyKXjbJhGPFSqSzkY/pages',
+    path: 'yDKXkjbhUFZYGEUdINOs/pages',
     component: DefaultLayoutComponent,
     data: {
       title: 'Home'

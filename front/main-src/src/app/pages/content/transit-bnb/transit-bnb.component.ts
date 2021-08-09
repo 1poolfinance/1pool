@@ -51,6 +51,9 @@ transit_btn:any=false;
 
   ngOnInit() {
 
+     const body = document.getElementsByTagName('body')[0];
+      body.classList.remove('forOverlayBottom');
+
      this.dtOptions = {
      
       dom: 'Bfrtip',

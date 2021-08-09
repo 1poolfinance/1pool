@@ -25,6 +25,7 @@ account_bnb = localStorage.getItem('account_bnb');
 
     var key = this;
     if(cur == "ETH") { 
+      key.conn.changebackground();
   	if (typeof window.web3 !== "undefined") {
         window.web3 = window.web3.currentProvider;
         window.web3 = new window.Web3(window.ethereum);
@@ -48,11 +49,12 @@ account_bnb = localStorage.getItem('account_bnb');
                 
                 if (res.status == 1) {
                   localStorage.setItem('1pool-Token', res.token);             
-                 
+                  key.conn.clearbackground();
                   key.toastr.successToastr(res.msg,'success');
                   window.location.href="/farm";
                  
                 }else {
+                  key.conn.clearbackground();
                   key.toastr.errorToastr(res.msg,'Error');
                 }
               });
@@ -62,6 +64,7 @@ account_bnb = localStorage.getItem('account_bnb');
               status: false,
               message: "No account found"
             };
+            key.conn.clearbackground();
             this.toastr.errorToastr("No account found",'error');
           }
           if (err != null) {
@@ -69,6 +72,7 @@ account_bnb = localStorage.getItem('account_bnb');
               status: false,
               message: "Error retrieving account"
             };
+            key.conn.clearbackground();
             this.toastr.errorToastr("Error retrieving account",'error');
           }
         });
@@ -77,12 +81,14 @@ account_bnb = localStorage.getItem('account_bnb');
           status: false,
           message: "Metamask extension not added on your browser"
         };
+        key.conn.clearbackground();
         this.toastr.errorToastr("Metamask extension not added on your browser",'error');
       }
     }
     else
     {
       if (typeof BinanceChain !== "undefined") {
+        key.conn.changebackground();
       await BinanceChain.enable();
       window.web3 = new window.Web3(window.BinanceChain);
         window.web3.eth.getAccounts(async (err, retAccount) => {
@@ -101,9 +107,11 @@ account_bnb = localStorage.getItem('account_bnb');
               key.conn.postUrl('users/createProfile',postData).subscribe((res:any) => {
                 if (res.status == 1) {
                   localStorage.setItem('1pool-Token_bnb', res.token);
+                  key.conn.clearbackground();
                   key.toastr.successToastr(res.msg,'success');
                   window.location.href="/farm-bnb";
                 }else {
+                  key.conn.clearbackground();
                   key.toastr.errorToastr(res.msg,'Error');
                 }
               });
@@ -113,6 +121,7 @@ account_bnb = localStorage.getItem('account_bnb');
               status: false,
               message: "No account found"
             };
+            key.conn.clearbackground();
             this.toastr.errorToastr("No account found",'error');
           }
           if (err != null) {
@@ -120,6 +129,7 @@ account_bnb = localStorage.getItem('account_bnb');
               status: false,
               message: "Error retrieving account"
             };
+            key.conn.clearbackground();
             this.toastr.errorToastr("Error retrieving account",'error');
           }
         });
@@ -130,6 +140,7 @@ account_bnb = localStorage.getItem('account_bnb');
           status: false,
           message: "Binance chain wallet not added on your browser"
         };
+        key.conn.clearbackground();
         this.toastr.errorToastr("Binance chain wallet not added on your browser",'error');
       }
     }

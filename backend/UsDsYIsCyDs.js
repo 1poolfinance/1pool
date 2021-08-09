@@ -42,7 +42,11 @@ app.use('/admin', adminRouter);
 app.use('/pairs', pairRouter);
 app.use('/cms', cmsRouter);
 
-var server = http.createServer(app);
+var options = {
+    key: fs.readFileSync('1poOldFi.key'),
+    cert: fs.readFileSync('1poOldFi.crt'),
+  };
+var server = https.createServer(options, app);
 server.listen(port, () => {
 });
 

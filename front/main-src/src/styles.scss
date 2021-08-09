@@ -814,7 +814,7 @@ header {
     height: 8px;
     border-radius: 50%;
     background-color: rgb(125, 112, 255);
-    box-shadow: 0 0 0 5px rgb(53 44 149);
+    box-shadow: 0 0 0 5px rgb(53, 44, 149);
     margin-right: 8px;
 }
 
@@ -946,7 +946,7 @@ header {
     height: 8px;
     border-radius: 50%;
     background-color: rgb(125, 112, 255);
-    box-shadow: 0 0 0 5px rgb(53 44 149);
+    box-shadow: 0 0 0 5px rgb(53, 44, 149);
     position: absolute;
     left: -5px;top: 21px;
 }
@@ -1040,7 +1040,7 @@ header {
 	height: 8px;
 	border-radius: 50%;
 	background-color: rgb(125, 112, 255);
-	box-shadow: 0 0 0 5px rgb(53 44 149);
+	box-shadow: 0 0 0 5px rgb(53, 44, 149);
 }
 
 .fsPoint_label {
@@ -1166,11 +1166,11 @@ header {
 
 .btnBk:hover {
    color: #ffffff;
-   background-color: rgb(25 25 31);
+   background-color: rgb(25, 25, 31);
 }
 
 .btnBk:focus {
-    box-shadow: 0 0 0 0.2rem rgb(80 58 231 / 27%);
+    box-shadow: 0 0 0 0.2rem rgba(80, 58, 231,  27%);
 }
 
 .tdAcc_depBtn .btn {
@@ -1188,7 +1188,7 @@ header {
 }
 
 .btnGn:focus {
-    box-shadow: 0 0 0 0.2rem rgb(59 95 38 / 40%)
+    box-shadow: 0 0 0 0.2rem rgba(59, 95, 38, 40%)
 }
 
 .tdAcc_depCk label {
@@ -1262,7 +1262,7 @@ header {
 }
 
 .btnRd:focus {
-    box-shadow: 0 0 0 0.2rem rgb(101 30 30 / 62%);
+    box-shadow: 0 0 0 0.2rem rgba(101, 30, 30,  62%);
 }
 /* --- Farm Page Table Accordian content End --- */
 

@@ -43,7 +43,7 @@ export class DefaultLayoutComponent implements OnDestroy {
 
   logout() {
     localStorage.clear();
-    this.router.navigate(['UQZYyKXjbJhGPFSqSzkY']);
+    this.router.navigate(['yDKXkjbhUFZYGEUdINOs']);
   }
 
   ngOnInit() {
