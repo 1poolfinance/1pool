@@ -24,16 +24,16 @@ https://bscscan.com/address/0xaC4D8b8B0682880DFd20015fB0e5DD9a30fCEbB6#code
 
 
  
-Name	                                   |Address                                                   |     	Description 
+Name	                                   |Address                                                   |     	Description     |
 -----------------------------------------|---------------------------------------------------------- |---------------------
-Deployer  (ETH mainnet)                  |	0xe2954d089f5de1a8B0d8A30DbE2DBBe182E7A908	             | Deploy and administer smart contracts
-Deployer ( BSC)                          |	0xe2954d089f5de1a8B0d8A30DbE2DBBe182E7A908	             |             ’’
-Treasury ( ETH mainnet)	                 |0x37d329aB93BE74a094810640ebc8c1915aeAC948	               | Received 5% of minited 1POOL
-Treasury (BSC) 	                         | 0x37d329aB93BE74a094810640ebc8c1915aeAC948	               |             ’’
-Minter  (ETH mainnet)	                   | 0xac4d8b8b0682880dfd20015fb0e5dd9a30fcebb6	               |  Ownership transferred to new minter. Mint 1POOL rewards 
-Minter (BSC)		                         |                                                           |              ’’
-Reward Pool (ETH mainnet)                |	0xa57EE92EFB9464768b7683A6B9fcDc102a255994	              | Farm 1POOL LP deposits; distribute rewards
-Reward Pool (BSC)	|0xd127d4214bc10470dE371f411440307ceF9B651	                |       ’’
+Deployer  (ETH mainnet)                  |	0xe2954d089f5de1a8B0d8A30DbE2DBBe182E7A908	             | Deploy and administer smart contracts |
+Deployer ( BSC)                          |	0xe2954d089f5de1a8B0d8A30DbE2DBBe182E7A908	             |             ’’  |
+Treasury ( ETH mainnet)	                 |0x37d329aB93BE74a094810640ebc8c1915aeAC948	               | Received 5% of minited 1POOL |
+Treasury (BSC) 	                         | 0x37d329aB93BE74a094810640ebc8c1915aeAC948	               |             ’’    |
+Minter  (ETH mainnet)	                   | 0xac4d8b8b0682880dfd20015fb0e5dd9a30fcebb6	               |  Ownership transferred to new minter. Mint 1POOL rewards |
+Minter (BSC)		                         |                                                           |              ’’    |
+Reward Pool (ETH mainnet)                |	0xa57EE92EFB9464768b7683A6B9fcDc102a255994	              | Farm 1POOL LP deposits; distribute rewards    |
+Reward Pool (BSC)	|0xd127d4214bc10470dE371f411440307ceF9B651	                |       ’’                     |
 IPOOL Converter (ETH mainnet) |	0x46c51b62007CaF9ACEeDcDAbcf80509409AB64E1	 | Convert Sushi – 1POOL
 1POOL Converter (BSC)	|  0x46c51b62007CaF9ACEeDcDAbcf80509409AB64E1	|   Convert  Cake -1POOL
 1POOL Stake (ETH mainnet) |  	0xe05649B24a3d9387EBCfa9736B8E581Dc220EA4a	|   Stake 1POOL Governence token; execute revenue share  (20% Revenue)
@@ -41,9 +41,22 @@ IPOOL Converter (ETH mainnet) |	0x46c51b62007CaF9ACEeDcDAbcf80509409AB64E1	 | Co
 Token Bridge ( on ETH mainnet) |	0xa57EE92EFB9464768b7683A6B9fcDc102a255994	|   Swap 1POOL ERC 20 to 1POOL BEP 20 vice versa
 Token Bridge ( on BSC)	|   0xb2781215a2E4E1d5f69E2E4D4643E7792dA9d369	   |                    ’’
 
+<br></p>
+**Vaults** <br> </p>
+ Vault                       | Underlying Assets                   | Vault Address                                | Pool Address      |
+ ----------------------------|-------------------------------------|-----------------------------------------------|------------------|
+ DAI/ETH	|   SLP|      	0xC3D03e4F041Fd4cD388c549Ee2A29a9E5075882f	|   0xfB26A29D48e03CAF6beEF9db139653f84bB2EBb7 |
+SUSHI/ETH	|  SLP |  	0xcA9E2E81a3fFd6578D4d2A56a361dd55d4F8beFa|   	0x739085B79eEAb5CcE6325231F033e571bA6A4Fa4 |
+USDC/ETH |	SLP|	0x397FF1542f962076d0BFE58eA045FfA2d347ACa0 |	0xc2bDF63D8cF818069AacDBa60C34B0De85FF01cD |
+ETH/USDT |	SLP | 	0x06da0fd433C1A5d7a4faa01111c044910A184553 |	0x8FBe670212B10B411E343983926a9317146e94De |
+LINK/ETH| SLP |	0xC40D16476380e4037e6b1A2594cAF6a6cc8Da967 |	0xf71aDc161B954835D06A173411e5937E38114Dad |
+SNX/ETH	|SLP |	0xA1d7b2d891e3A1f9ef4bBC5be20630C2FEB1c470 |	0xcA9E2E81a3fFd6578D4d2A56a361dd55d4F8beFa |
+REN/ETH	|SLP |	0x611CDe65deA90918c0078ac0400A72B0D25B9bb1 | 	0x20dEc9e2308bE9754Ba26A5F9274f990CAa7443F |
+BAND/ETH	| SLP	| 0xA75F7c2F025f470355515482BdE9EFA8153536A8 |	0x530dFAB367Ed795E7F73038FCB39756099257aF0 |
 
-
- 
+ 
+ 
+ 
 
 
 
