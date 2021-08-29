@@ -41,8 +41,8 @@ IPOOL Converter (ETH mainnet) |	0x46c51b62007CaF9ACEeDcDAbcf80509409AB64E1	 | Co
 Token Bridge ( on ETH mainnet) |	0xa57EE92EFB9464768b7683A6B9fcDc102a255994	|   Swap 1POOL ERC 20 to 1POOL BEP 20 vice versa
 Token Bridge ( on BSC)	|   0xb2781215a2E4E1d5f69E2E4D4643E7792dA9d369	   |                    ’’
 
-<br></p>
-**Vaults** <br> </p>
+
+### Vaults </p>
  Vault                       | Underlying Assets                   | Vault Address                                | Pool Address      |
  ----------------------------|-------------------------------------|-----------------------------------------------|------------------|
  DAI/ETH	|   SLP|      	0xC3D03e4F041Fd4cD388c549Ee2A29a9E5075882f	|   0xfB26A29D48e03CAF6beEF9db139653f84bB2EBb7 |
@@ -56,7 +56,20 @@ BAND/ETH	| SLP	| 0xA75F7c2F025f470355515482BdE9EFA8153536A8 |	0x530dFAB367Ed795E
 
  
  
+ #### Vaults </p>
  
+ Vault                      |	Underlying Asset  |                  	Vault Address         |	Pool Address         |
+ ---------------------------|-------------------|-----------------------------------------|----------------------|
+CAKE/ BNB	|  Pancake LPs     |	0x0eD7e52944161450477ee417DE9Cd3a859b14fD0  |	0xB493dA04D7f6026Fa1A526eF3b630B03ab675C26
+BUSD/WBNB	 | Pancake LPs  |	0x58F876857a02D6762E0101bb5C46A8c1ED44Dc16  |	0x035a551c8b6084294C7C51329cCe3E185c160F72
+ETH/WBNB   |	Pancake LPs  |	0x035a551c8b6084294C7C51329cCe3E185c160F72	|  0x6b334725690b8b234b98837240FB3446C39D4874
+DAI/WBNB  |	Pancake LPs  |	0x56C77d59E82f33c712f919D09FcedDf49660a829	|     0x5876248570314Fdc735bB219F122481987cD5936
+USDT/WBNB  |  	Pancake LPs  |  	0x16b9a82891338f9bA80E2D6970FddA79D1eb0daE  |  	0x091A3cC274Cf09D6e1a516C66578edDd671C0921
+BTCB/WBNB  |	Pancake LPs	|  0x61EB789d75A95CAa3fF50ed7E47b96c132fEc082  |  	0xd70e84C265f8C3594696bEE6C97121b14c198eAe
+ADA/WBNB  |	Pancake LPs	   |    0x28415ff2C35b65B9E5c7de82126b4015ab9d031F	  |   0x2707aAe9139Db21913C503E1b4ba39e79981d70C
+DOT/WBNB	|   Pancake LPs	|     0xDd5bAd8f8b360d76d12FdA230F8BAF42fe0022CF |   	0xF15F93d1e2BaB86D5785b994Cd0DC821892C0351
+ATOM/WBNB  |	Pancake LPs	  |   0x468b2DC8DC75990eE3E9dc0648965Ad6294E7914	   |  0x76F07eC792e5E2182577A1542C3b8EF2df8c32Fc
+
 
 
 
