@@ -31,7 +31,7 @@ Deployer ( BSC)                          |	0xe2954d089f5de1a8B0d8A30DbE2DBBe182E
 Treasury ( ETH mainnet)	                 |0x37d329aB93BE74a094810640ebc8c1915aeAC948	               | Received 5% of minited 1POOL |
 Treasury (BSC) 	                         | 0x37d329aB93BE74a094810640ebc8c1915aeAC948	               |             ’’    |
 Minter  (ETH mainnet)	                   | 0xac4d8b8b0682880dfd20015fb0e5dd9a30fcebb6	               |  Ownership transferred to new minter. Mint 1POOL rewards |
-Minter (BSC)		                         |                                                           |              ’’    |
+Minter (BSC)		                         |  0xac4d8b8b0682880dfd20015fb0e5dd9a30fcebb6                                                         |              ’’    |
 Reward Pool (ETH mainnet)                |	0xa57EE92EFB9464768b7683A6B9fcDc102a255994	              | Farm 1POOL LP deposits; distribute rewards    |
 Reward Pool (BSC)	|0xd127d4214bc10470dE371f411440307ceF9B651	                |       ’’                     |
 IPOOL Converter (ETH mainnet) |	0x46c51b62007CaF9ACEeDcDAbcf80509409AB64E1	 | Convert Sushi – 1POOL
